@@ -333,15 +333,6 @@ fetch("questions.json")
         tile.id = "tile" + index;
 
 
-
-          if (choice === "1") {
-            tile.classList.remove("red", "yellow");
-            tile.classList.add("green");
-          } else if (choice === "2") {
-            tile.classList.remove("green", "red");
-            tile.classList.add("yellow");
-          };
-
         tileGroup.appendChild(tile);
         tiles.appendChild(tileGroup);
       });
