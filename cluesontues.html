@@ -310,15 +310,40 @@ fetch("questions.json")
 
       document.getElementById("scoreText").innerText = score + "/" + questions.length;
 
-      const tiles = document.getElementById("tiles");
-      tiles.innerHTML = "";
+  results.forEach((correct, index) => {
+  const tileWrapper = document.createElement("div");
+  tileWrapper.style.textAlign = "center";
 
-      results.forEach((correct, index) => {
-        const tile = document.createElement("div");
-        tile.className = "tile " + (correct ? "green" : "red");
-        tile.style.animationDelay = (index * 0.05) + "s";
-        tiles.appendChild(tile);
-      });
+  const tile = document.createElement("div");
+  tile.className = "tile " + (correct ? "green" : "red");
+  tile.style.animationDelay = (index * 0.05) + "s";
+  tile.id = "tile" + index;
+
+  const varBtn = document.createElement("button");
+  varBtn.innerText = "VAR";
+  varBtn.className = "close-btn";
+  varBtn.style.marginTop = "6px";
+  varBtn.onclick = () => {
+    tile.classList.remove("green", "red");
+    tile.classList.add("yellow");
+  };
+
+  const misBtn = document.createElement("button");
+  misBtn.innerText = "Misspelled Right";
+  misBtn.className = "close-btn";
+  misBtn.style.marginTop = "6px";
+  misBtn.onclick = () => {
+    tile.classList.remove("red", "yellow");
+    tile.classList.add("green");
+  };
+
+  tileWrapper.appendChild(tile);
+  tileWrapper.appendChild(varBtn);
+  tileWrapper.appendChild(misBtn);
+
+  tiles.appendChild(tileWrapper);
+});
+
 
       const answersBox = document.getElementById("correctAnswers");
 answersBox.innerHTML = "<h3>Correct Answers:</h3>";
