@@ -41,6 +41,11 @@
     height: 32px;
     font-size: 0.9rem;
   }
+    button[type="submit"] {
+    font-size: 0.92rem;
+    padding: 10px 12px;
+    width: 100%;
+  }
 }
 
     @keyframes fadeInBody {
@@ -168,17 +173,16 @@
     }
 
     /* POPUP BOX */
-    .popup {
-      background: white;
-      padding: 30px;
-      width: 350px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 6px 25px rgba(0,0,0,0.2);
-      transform: scale(0.8);
-      opacity: 0;
-      animation: popupIn 0.4s ease forwards;
-    }
+.popup {
+  background: white;
+  padding: 18px 20px;       /* tighter padding */
+  width: 90%;
+  max-width: 350px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+}
+
 
     @keyframes popupIn {
       to {
@@ -237,7 +241,9 @@
 
 <body>
   <div class="container">
-    <img src="logo.png" alt="CluesOnTues Logo" style="width:580px; display:block; margin:0 auto 20px auto;">
+<img src="logo.png" alt="CluesOnTues Logo"
+     style="max-width:100%; height:auto; display:block; margin:0 auto 20px auto;">
+
 
 
     <form id="quizForm">
