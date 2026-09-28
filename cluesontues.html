@@ -283,162 +283,77 @@
     </div>
   </div>
 
-  <script>
-  function closePopup() {
-  document.getElementById("overlay").style.display = "none";
-}
+  document.getElementById("quizForm").addEventListener("submit", function(e) {
+  e.preventDefault();
 
-// Load questions ON PAGE LOAD (not on submit)
-fetch("questions.json")
-  .then(response => response.json())
-  .then(questions => {
+  let score = 0;
+  let results = [];
 
-    // Build the question fields
-    const container = document.getElementById("questionsContainer");
-    questions.forEach((q, index) => {
-      const div = document.createElement("div");
-      div.className = "question";
-      div.innerHTML = `
-        <p>${index + 1}. ${q.question}</p>
-        <input type="text" name="q${index}">
-      `;
-      container.appendChild(div);
-    });
+  questions.forEach((q, index) => {
+    const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
+    const correct = userAnswer === q.answer.toLowerCase();
+    results.push(correct);
+    if (correct) score++;
+  });
 
-    // Handle quiz submission
-    document.getElementById("quizForm").addEventListener("submit", function(e) {
-      e.preventDefault();
+  document.getElementById("scoreText").innerText = score + "/" + questions.length;
 
-      let score = 0;
-      let results = [];
+  const tiles = document.getElementById("tiles");
+  tiles.innerHTML = "";
 
-      questions.forEach((q, index) => {
-        const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
-        const correct = userAnswer === q.answer.toLowerCase();
-        results.push(correct);
-        if (correct) score++;
-      });
+  results.forEach((correct, index) => {
+    const tileGroup = document.createElement("div");
+    tileGroup.style.display = "flex";
+    tileGroup.style.flexDirection = "column";
+    tileGroup.style.alignItems = "center";
+    tileGroup.style.margin = "6px";
 
-      document.getElementById("scoreText").innerText = score + "/" + questions.length;
+    const tile = document.createElement("div");
+    tile.className = "tile " + (correct ? "green" : "red");
+    tile.style.animationDelay = (index * 0.05) + "s";
+    tile.id = "tile" + index;
 
-results.forEach((correct, index) => {
-  const tileGroup = document.createElement("div");
-  tileGroup.style.display = "flex";
-  tileGroup.style.flexDirection = "column";
-  tileGroup.style.alignItems = "center";
-  tileGroup.style.margin = "6px";
+    const varBtn = document.createElement("button");
+    varBtn.innerText = "VAR";
+    varBtn.className = "close-btn";
+    varBtn.style.marginTop = "6px";
+    varBtn.onclick = () => {
+      const choice = prompt(
+        "VAR Review:\n\n1️⃣ I Misspelled That!\n2️⃣ Nah, I’m Contesting That!\n\nType 1 or 2:"
+      );
 
-  const tile = document.createElement("div");
-  tile.className = "tile " + (correct ? "green" : "red");
-  tile.style.animationDelay = (index * 0.05) + "s";
-  tile.id = "tile" + index;
+      if (choice === "1") {
+        tile.classList.remove("red", "yellow");
+        tile.classList.add("green");
+      } else if (choice === "2") {
+        tile.classList.remove("green", "red");
+        tile.classList.add("yellow");
+      }
+    };
 
-  const varBtn = document.createElement("button");
-  varBtn.innerText = "VAR";
-  varBtn.className = "close-btn";
-  varBtn.style.marginTop = "6px";
-  varBtn.onclick = () => {
-    const choice = prompt(
-      "VAR Review:\n\n1️⃣ I Misspelled That!\n2️⃣ Nah, I’m Contesting That!\n\nType 1 or 2:"
-    );
+    tileGroup.appendChild(tile);
+    tileGroup.appendChild(varBtn);
+    tiles.appendChild(tileGroup);
+  });
 
-    if (choice === "1") {
-      tile.classList.remove("red", "yellow");
-      tile.classList.add("green");
-    } else if (choice === "2") {
-      tile.classList.remove("green", "red");
-      tile.classList.add("yellow");
-    }
-  };
+  const answersBox = document.getElementById("correctAnswers");
+  answersBox.innerHTML = "<h3>Correct Answers:</h3>";
 
-  tileGroup.appendChild(tile);
-  tileGroup.appendChild(varBtn);
-  tiles.appendChild(tileGroup);
+  questions.forEach((q, index) => {
+    const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
+    const correct = userAnswer === q.answer.toLowerCase();
+
+    answersBox.innerHTML += `
+      <p>
+        ${correct ? "🟩" : "🟥"} 
+        <strong>${index + 1}.</strong> ${q.answer}
+      </p>
+    `;
+  });
+
+  document.getElementById("overlay").style.display = "flex";
 });
 
-
-  const misBtn = document.createElement("button");
-  misBtn.innerText = "Misspelled Right";
-  misBtn.className = "close-btn";
-  misBtn.onclick = () => {
-    tile.classList.remove("red", "yellow");
-    tile.classList.add("green");
-  };
-
-  buttonRow.appendChild(varBtn);
-  buttonRow.appendChild(misBtn);
-  tileGroup.appendChild(tile);
-  tileGroup.appendChild(buttonRow);
-  tiles.appendChild(tileGroup);
-});
-
-
-
-      const answersBox = document.getElementById("correctAnswers");
-answersBox.innerHTML = "<h3>Correct Answers:</h3>";
-
-questions.forEach((q, index) => {
-  const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
-  const correct = userAnswer === q.answer.toLowerCase();
-
-  answersBox.innerHTML += `
-    <p>
-      ${correct ? "🟩" : "🟥"} 
-      <strong>${index + 1}.</strong> ${q.answer}
-    </p>
-  `;
-});
-
-
-      document.getElementById("overlay").style.display = "flex";
-    });
-
-// iPhone‑safe share button
-function shareResult() {
-  setTimeout(() => {
-    const scoreText = document.getElementById("scoreText").innerText;
-    const tiles = document.querySelectorAll(".tile");
-
-    let emojiGrid = "";
-    tiles.forEach(tile => {
-        if (tile.classList.contains("green")) emojiGrid += "🟩";
-  else if (tile.classList.contains("yellow")) emojiGrid += "🟨";
-  else emojiGrid += "🟥";
-    });
-
-    const shareText =
-      `Try Beat Me I Got: ${scoreText}\n` +
-      `${emojiGrid}\n` +
-      `https://harvic20.github.io/cluesontues.html`;
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(shareText).then(() => {
-        document.getElementById("copyConfirm").style.display = "block";
-        setTimeout(() => {
-          document.getElementById("copyConfirm").style.display = "none";
-        }, 2000);
-      }).catch(() => fallbackCopy(shareText));
-    } else {
-      fallbackCopy(shareText);
-    }
-  }, 100);
-}
-
-function fallbackCopy(text) {
-  const temp = document.createElement("textarea");
-  temp.value = text;
-  document.body.appendChild(temp);
-  temp.select();
-  document.execCommand("copy");
-  document.body.removeChild(temp);
-
-  document.getElementById("copyConfirm").style.display = "block";
-  setTimeout(() => {
-    document.getElementById("copyConfirm").style.display = "none";
-  }, 2000);
-}
-
-  </script>
 
 </body>
 </html>
