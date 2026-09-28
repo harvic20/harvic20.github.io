@@ -224,6 +224,8 @@
       <p id="scoreText"></p>
 
       <div class="tiles" id="tiles"></div>
+      <div id="correctAnswers" style="margin-top:20px; text-align:left;"></div>
+
 
       <button class="close-btn" onclick="shareResult()">Share Result</button>
 <button class="close-btn" onclick="closePopup()">Close</button>
@@ -281,6 +283,22 @@ fetch("questions.json")
         tile.style.animationDelay = (index * 0.05) + "s";
         tiles.appendChild(tile);
       });
+
+      const answersBox = document.getElementById("correctAnswers");
+answersBox.innerHTML = "<h3>Correct Answers:</h3>";
+
+questions.forEach((q, index) => {
+  const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
+  const correct = userAnswer === q.answer.toLowerCase();
+
+  answersBox.innerHTML += `
+    <p>
+      ${correct ? "🟩" : "🟥"} 
+      <strong>${index + 1}.</strong> ${q.answer}
+    </p>
+  `;
+});
+
 
       document.getElementById("overlay").style.display = "flex";
     });
