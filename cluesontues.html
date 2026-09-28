@@ -183,6 +183,13 @@
   box-shadow: 0 6px 25px rgba(0,0,0,0.2);
 }
 
+.close-btn {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+}
+
+
 
     @keyframes popupIn {
       to {
@@ -310,19 +317,26 @@ fetch("questions.json")
 
       document.getElementById("scoreText").innerText = score + "/" + questions.length;
 
-  results.forEach((correct, index) => {
-  const tileWrapper = document.createElement("div");
-  tileWrapper.style.textAlign = "center";
+results.forEach((correct, index) => {
+  const tileGroup = document.createElement("div");
+  tileGroup.style.display = "flex";
+  tileGroup.style.flexDirection = "column";
+  tileGroup.style.alignItems = "center";
+  tileGroup.style.margin = "6px";
 
   const tile = document.createElement("div");
   tile.className = "tile " + (correct ? "green" : "red");
   tile.style.animationDelay = (index * 0.05) + "s";
   tile.id = "tile" + index;
 
+  const buttonRow = document.createElement("div");
+  buttonRow.style.display = "flex";
+  buttonRow.style.gap = "6px";
+  buttonRow.style.marginTop = "4px";
+
   const varBtn = document.createElement("button");
   varBtn.innerText = "VAR";
   varBtn.className = "close-btn";
-  varBtn.style.marginTop = "6px";
   varBtn.onclick = () => {
     tile.classList.remove("green", "red");
     tile.classList.add("yellow");
@@ -331,18 +345,18 @@ fetch("questions.json")
   const misBtn = document.createElement("button");
   misBtn.innerText = "Misspelled Right";
   misBtn.className = "close-btn";
-  misBtn.style.marginTop = "6px";
   misBtn.onclick = () => {
     tile.classList.remove("red", "yellow");
     tile.classList.add("green");
   };
 
-  tileWrapper.appendChild(tile);
-  tileWrapper.appendChild(varBtn);
-  tileWrapper.appendChild(misBtn);
-
-  tiles.appendChild(tileWrapper);
+  buttonRow.appendChild(varBtn);
+  buttonRow.appendChild(misBtn);
+  tileGroup.appendChild(tile);
+  tileGroup.appendChild(buttonRow);
+  tiles.appendChild(tileGroup);
 });
+
 
 
       const answersBox = document.getElementById("correctAnswers");
