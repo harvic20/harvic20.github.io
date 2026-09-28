@@ -233,7 +233,12 @@
 
       <div class="tiles" id="tiles"></div>
 
-      <button class="close-btn" onclick="closePopup()">Close</button>
+      <button class="close-btn" onclick="shareResult()">Share Result</button>
+<button class="close-btn" onclick="closePopup()">Close</button>
+<p id="copyConfirm" style="display:none; margin-top:10px; color:#0a4dbf; font-weight:bold;">
+  Copied to clipboard!
+</p>
+
     </div>
   </div>
 
@@ -282,6 +287,29 @@
 
       document.getElementById("overlay").style.display = "flex";
     });
+    function shareResult() {
+  const scoreText = document.getElementById("scoreText").innerText;
+  const tiles = document.querySelectorAll(".tile");
+
+  let emojiGrid = "";
+  tiles.forEach(tile => {
+    if (tile.classList.contains("green")) emojiGrid += "🟩";
+    else emojiGrid += "🟥";
+  });
+
+  const shareText =
+    `Try Beat Me I Got: ${scoreText}\n` +
+    `${emojiGrid}\n` +
+    `https://harvic20.github.io/cluesontues.html`;
+
+  navigator.clipboard.writeText(shareText).then(() => {
+    document.getElementById("copyConfirm").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("copyConfirm").style.display = "none";
+    }, 2000);
+  });
+}
+
   </script>
 
 </body>
