@@ -242,28 +242,50 @@
     document.getElementById("quizForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const answers = {
-        q1: "paris",
-        q2: "green",
-        q3: "366",
-        q4: "mars",
-        q5: "30",
-        q6: "shakespeare",
-        q7: "carbon dioxide",
-        q8: "pacific",
-        q9: "9",
-        q10: "piano"
-      };
+fetch("questions.json")
+  .then(response => response.json())
+  .then(questions => {
+    const container = document.getElementById("questionsContainer");
+
+    questions.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `
+        <p>${index + 1}. ${q.question}</p>
+        <input type="text" name="q${index}">
+      `;
+      container.appendChild(div);
+    });
+
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
       let score = 0;
       let results = [];
 
-      for (let i = 1; i <= 10; i++) {
-        const userAnswer = document.querySelector(`input[name="q${i}"]`).value.trim().toLowerCase();
-        const correct = userAnswer === answers[`q${i}`];
+      questions.forEach((q, index) => {
+        const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
+        const correct = userAnswer === q.answer.toLowerCase();
         results.push(correct);
         if (correct) score++;
-      }
+      });
+
+      document.getElementById("scoreText").innerText = score + "/" + questions.length;
+
+      const tiles = document.getElementById("tiles");
+      tiles.innerHTML = "";
+
+      results.forEach((correct, index) => {
+        const tile = document.createElement("div");
+        tile.className = "tile " + (correct ? "green" : "red");
+        tile.style.animationDelay = (index * 0.05) + "s";
+        tiles.appendChild(tile);
+      });
+
+      document.getElementById("overlay").style.display = "flex";
+    });
+  });
+
 
       document.getElementById("scoreText").innerText = score + "/10";
 
