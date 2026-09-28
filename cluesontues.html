@@ -284,76 +284,96 @@
   </div>
   </body>
 <script>
-  document.getElementById("quizForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+ // Load questions when page loads
+fetch("questions.json")
+  .then(response => response.json())
+  .then(questions => {
 
-  let score = 0;
-  let results = [];
+    // Build questions
+    const container = document.getElementById("questionsContainer");
+    questions.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `
+        <p>${index + 1}. ${q.question}</p>
+        <input type="text" name="q${index}">
+      `;
+      container.appendChild(div);
+    });
 
-  questions.forEach((q, index) => {
-    const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
-    const correct = userAnswer === q.answer.toLowerCase();
-    results.push(correct);
-    if (correct) score++;
+    // Handle submit
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let score = 0;
+      let results = [];
+
+      questions.forEach((q, index) => {
+        const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
+        const correct = userAnswer === q.answer.toLowerCase();
+        results.push(correct);
+        if (correct) score++;
+      });
+
+      document.getElementById("scoreText").innerText = score + "/" + questions.length;
+
+      const tiles = document.getElementById("tiles");
+      tiles.innerHTML = "";
+
+      results.forEach((correct, index) => {
+        const tileGroup = document.createElement("div");
+        tileGroup.style.display = "flex";
+        tileGroup.style.flexDirection = "column";
+        tileGroup.style.alignItems = "center";
+        tileGroup.style.margin = "6px";
+
+        const tile = document.createElement("div");
+        tile.className = "tile " + (correct ? "green" : "red");
+        tile.style.animationDelay = (index * 0.05) + "s";
+        tile.id = "tile" + index;
+
+        const varBtn = document.createElement("button");
+        varBtn.innerText = "VAR";
+        varBtn.className = "close-btn";
+        varBtn.style.marginTop = "6px";
+        varBtn.onclick = () => {
+          const choice = prompt(
+            "VAR Review:\n\n1️⃣ I Misspelled That!\n2️⃣ Nah, I’m Contesting That!\n\nType 1 or 2:"
+          );
+
+          if (choice === "1") {
+            tile.classList.remove("red", "yellow");
+            tile.classList.add("green");
+          } else if (choice === "2") {
+            tile.classList.remove("green", "red");
+            tile.classList.add("yellow");
+          }
+        };
+
+        tileGroup.appendChild(tile);
+        tileGroup.appendChild(varBtn);
+        tiles.appendChild(tileGroup);
+      });
+
+      const answersBox = document.getElementById("correctAnswers");
+      answersBox.innerHTML = "<h3>Correct Answers:</h3>";
+
+      questions.forEach((q, index) => {
+        const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
+        const correct = userAnswer === q.answer.toLowerCase();
+
+        answersBox.innerHTML += `
+          <p>
+            ${correct ? "🟩" : "🟥"} 
+            <strong>${index + 1}.</strong> ${q.answer}
+          </p>
+        `;
+      });
+
+      document.getElementById("overlay").style.display = "flex";
+    });
+
   });
-
-  document.getElementById("scoreText").innerText = score + "/" + questions.length;
-
-  const tiles = document.getElementById("tiles");
-  tiles.innerHTML = "";
-
-  results.forEach((correct, index) => {
-    const tileGroup = document.createElement("div");
-    tileGroup.style.display = "flex";
-    tileGroup.style.flexDirection = "column";
-    tileGroup.style.alignItems = "center";
-    tileGroup.style.margin = "6px";
-
-    const tile = document.createElement("div");
-    tile.className = "tile " + (correct ? "green" : "red");
-    tile.style.animationDelay = (index * 0.05) + "s";
-    tile.id = "tile" + index;
-
-    const varBtn = document.createElement("button");
-    varBtn.innerText = "VAR";
-    varBtn.className = "close-btn";
-    varBtn.style.marginTop = "6px";
-    varBtn.onclick = () => {
-      const choice = prompt(
-        "VAR Review:\n\n1️⃣ I Misspelled That!\n2️⃣ Nah, I’m Contesting That!\n\nType 1 or 2:"
-      );
-
-      if (choice === "1") {
-        tile.classList.remove("red", "yellow");
-        tile.classList.add("green");
-      } else if (choice === "2") {
-        tile.classList.remove("green", "red");
-        tile.classList.add("yellow");
-      }
-    };
-
-    tileGroup.appendChild(tile);
-    tileGroup.appendChild(varBtn);
-    tiles.appendChild(tileGroup);
-  });
-
-  const answersBox = document.getElementById("correctAnswers");
-  answersBox.innerHTML = "<h3>Correct Answers:</h3>";
-
-  questions.forEach((q, index) => {
-    const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
-    const correct = userAnswer === q.answer.toLowerCase();
-
-    answersBox.innerHTML += `
-      <p>
-        ${correct ? "🟩" : "🟥"} 
-        <strong>${index + 1}.</strong> ${q.answer}
-      </p>
-    `;
-  });
-
-  document.getElementById("overlay").style.display = "flex";
-});
 
 </script>
 </html>
