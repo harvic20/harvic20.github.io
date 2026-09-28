@@ -273,7 +273,7 @@
       <div class="tiles" id="tiles"></div>
       <div id="correctAnswers" style="margin-top:20px; text-align:left;"></div>
 
-
+      <button class="close-btn" onclick="openVAR()">VAR</button>
       <button class="close-btn" onclick="shareResult()">Share Result</button>
 <button class="close-btn" onclick="closePopup()">Close</button>
 <p id="copyConfirm" style="display:none; margin-top:10px; color:#0a4dbf; font-weight:bold;">
@@ -332,14 +332,7 @@ fetch("questions.json")
         tile.style.animationDelay = (index * 0.05) + "s";
         tile.id = "tile" + index;
 
-        const varBtn = document.createElement("button");
-        varBtn.innerText = "VAR";
-        varBtn.className = "close-btn";
-        varBtn.style.marginTop = "6px";
-        varBtn.onclick = () => {
-          const choice = prompt(
-            "VAR Review:\n\n1️⃣ I Misspelled That!\n2️⃣ Nah, I’m Contesting That!\n\nType 1 or 2:"
-          );
+
 
           if (choice === "1") {
             tile.classList.remove("red", "yellow");
@@ -351,7 +344,6 @@ fetch("questions.json")
         };
 
         tileGroup.appendChild(tile);
-        tileGroup.appendChild(varBtn);
         tiles.appendChild(tileGroup);
       });
 
@@ -374,6 +366,31 @@ fetch("questions.json")
     });
 
   });
+function openVAR() {
+  const qNum = prompt("Which question number do you want to review? (1–10)");
+
+  if (!qNum || isNaN(qNum)) return;
+
+  const index = parseInt(qNum) - 1;
+  const tile = document.getElementById("tile" + index);
+
+  if (!tile) {
+    alert("That tile doesn't exist!");
+    return;
+  }
+
+  const choice = prompt(
+    "VAR Review:\n\n1️⃣ I Misspelled That!\n2️⃣ Nah, I’m Contesting That!\n\nType 1 or 2:"
+  );
+
+  if (choice === "1") {
+    tile.classList.remove("red", "yellow");
+    tile.classList.add("green");
+  } else if (choice === "2") {
+    tile.classList.remove("green", "red");
+    tile.classList.add("yellow");
+  }
+}
 
 </script>
 </html>
