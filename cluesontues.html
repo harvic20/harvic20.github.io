@@ -38,8 +38,8 @@
   }
 
   .tile {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     font-size: 0.9rem;
   }
     button[type="submit"] {
@@ -205,7 +205,7 @@
     .tiles {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 8px;
+      gap: 2px;
       margin: 14px auto;
       max-width: 250px;
     }
@@ -325,7 +325,7 @@ fetch("questions.json")
         tileGroup.style.display = "flex";
         tileGroup.style.flexDirection = "column";
         tileGroup.style.alignItems = "center";
-        tileGroup.style.margin = "6px";
+        tileGroup.style.margin = "2px";
 
         const tile = document.createElement("div");
         tile.className = "tile " + (correct ? "green" : "red");
