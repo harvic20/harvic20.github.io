@@ -1,27 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My 10‑Question Quiz</title>
+  <meta charset="UTF-8">
+  <title>Clues on Tues Quiz</title>
   <style>
     body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; }
     .question { margin-bottom: 20px; }
-    #result { margin-top: 30px; font-size: 1.4em; font-weight: bold; }
+    #result { margin-top: 30px; font-size: 1.3em; font-weight: bold; }
+    button { padding: 10px 20px; font-size: 1em; }
   </style>
 </head>
 <body>
 
-<h1>10‑Question Quiz</h1>
-
+<h1>Clues on Tues Quiz</h1>
 <form id="quizForm">
   <div class="question">
-    <p>1. Question text here?</p>
-    <input type="radio" name="q1" value="1"> Option A<br>
-    <input type="radio" name="q1" value="2"> Option B<br>
+    <p>1. What is the capital of France?</p>
+    <input type="text" name="q1">
   </div>
 
-  <!-- Duplicate this block for q2–q10 -->
-  
-  <button type="submit">Get Result</button>
+  <div class="question">
+    <p>2. What color do you get when you mix blue and yellow?</p>
+    <input type="text" name="q2">
+  </div>
+
+  <div class="question">
+    <p>3. How many days are in a leap year?</p>
+    <input type="text" name="q3">
+  </div>
+
+  <div class="question">
+    <p>4. What planet is known as the Red Planet?</p>
+    <input type="text" name="q4">
+  </div>
+
+  <div class="question">
+    <p>5. What is 5 × 6?</p>
+    <input type="text" name="q5">
+  </div>
+
+  <div class="question">
+    <p>6. Who wrote “Romeo and Juliet”?</p>
+    <input type="text" name="q6">
+  </div>
+
+  <div class="question">
+    <p>7. What gas do plants absorb from the air?</p>
+    <input type="text" name="q7">
+  </div>
+
+  <div class="question">
+    <p>8. What is the largest ocean on Earth?</p>
+    <input type="text" name="q8">
+  </div>
+
+  <div class="question">
+    <p>9. What is the square root of 81?</p>
+    <input type="text" name="q9">
+  </div>
+
+  <div class="question">
+    <p>10. What instrument has keys, pedals, and strings?</p>
+    <input type="text" name="q10">
+  </div>
+
+  <button type="submit">Submit Answers</button>
 </form>
 
 <div id="result"></div>
@@ -30,18 +73,31 @@
 document.getElementById("quizForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
+  const answers = {
+    q1: "paris",
+    q2: "green",
+    q3: "366",
+    q4: "mars",
+    q5: "30",
+    q6: "shakespeare",
+    q7: "carbon dioxide",
+    q8: "pacific",
+    q9: "9",
+    q10: "piano"
+  };
+
   let score = 0;
   for (let i = 1; i <= 10; i++) {
-    const answer = document.querySelector(`input[name="q${i}"]:checked`);
-    if (answer) score += parseInt(answer.value);
+    const userAnswer = document.querySelector(`input[name="q${i}"]`).value.trim().toLowerCase();
+    if (userAnswer === answers[`q${i}`]) score++;
   }
 
   let resultText = "";
-  if (score < 10) resultText = "Result A";
-  else if (score < 20) resultText = "Result B";
-  else resultText = "Result C";
+  if (score <= 3) resultText = "Keep trying! You scored " + score + "/10.";
+  else if (score <= 7) resultText = "Nice work! You scored " + score + "/10.";
+  else resultText = "Excellent! You scored " + score + "/10.";
 
-  document.getElementById("result").innerText = "Your result: " + resultText;
+  document.getElementById("result").innerText = resultText;
 });
 </script>
 
