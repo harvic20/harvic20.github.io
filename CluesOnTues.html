@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My 10‑Question Quiz</title>
+  <style>
+    body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; }
+    .question { margin-bottom: 20px; }
+    #result { margin-top: 30px; font-size: 1.4em; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h1>10‑Question Quiz</h1>
+
+<form id="quizForm">
+  <div class="question">
+    <p>1. Question text here?</p>
+    <input type="radio" name="q1" value="1"> Option A<br>
+    <input type="radio" name="q1" value="2"> Option B<br>
+  </div>
+
+  <!-- Duplicate this block for q2–q10 -->
+  
+  <button type="submit">Get Result</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+document.getElementById("quizForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  let score = 0;
+  for (let i = 1; i <= 10; i++) {
+    const answer = document.querySelector(`input[name="q${i}"]:checked`);
+    if (answer) score += parseInt(answer.value);
+  }
+
+  let resultText = "";
+  if (score < 10) resultText = "Result A";
+  else if (score < 20) resultText = "Result B";
+  else resultText = "Result C";
+
+  document.getElementById("result").innerText = "Your result: " + resultText;
+});
+</script>
+
+</body>
+</html>
