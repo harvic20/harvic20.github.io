@@ -3,103 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <title>Clues on Tues Quiz</title>
+
   <style>
-    body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; }
-    .question { margin-bottom: 20px; }
-    #result { margin-top: 30px; font-size: 1.3em; font-weight: bold; }
-    button { padding: 10px 20px; font-size: 1em; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f5f9ff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 60px auto;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+      text-align: center;
+      color: #0a4dbf;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    .question {
+      margin-bottom: 25px;
+    }
+
+    .question p {
+      font-weight: 600;
+      color: #0a4dbf;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 2px solid #dce6ff;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #0a4dbf;
+      outline: none;
+      box-shadow: 0 0 6px rgba(10,77,191,0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #0a4dbf;
+      color: white;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #083a8f;
+    }
+
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #eaf1ff;
+      border-left: 6px solid #0a4dbf;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      color: #083a8f;
+      display: none;
+    }
   </style>
 </head>
+
 <body>
+  <div class="container">
+    <h1>Clues on Tues Quiz</h1>
 
-<h1>Clues on Tues Quiz</h1>
-<form id="quizForm">
-  <div class="question">
-    <p>1. What is the capital of France?</p>
-    <input type="text" name="q1">
+    <form id="quizForm">
+      <div class="question">
+        <p>1. What is the capital of France?</p>
+        <input type="text" name="q1">
+      </div>
+
+      <div class="question">
+        <p>2. What color do you get when you mix blue and yellow?</p>
+        <input type="text" name="q2">
+      </div>
+
+      <div class="question">
+        <p>3. How many days are in a leap year?</p>
+        <input type="text" name="q3">
+      </div>
+
+      <div class="question">
+        <p>4. What planet is known as the Red Planet?</p>
+        <input type="text" name="q4">
+      </div>
+
+      <div class="question">
+        <p>5. What is 5 × 6?</p>
+        <input type="text" name="q5">
+      </div>
+
+      <div class="question">
+        <p>6. Who wrote “Romeo and Juliet”?</p>
+        <input type="text" name="q6">
+      </div>
+
+      <div class="question">
+        <p>7. What gas do plants absorb from the air?</p>
+        <input type="text" name="q7">
+      </div>
+
+      <div class="question">
+        <p>8. What is the largest ocean on Earth?</p>
+        <input type="text" name="q8">
+      </div>
+
+      <div class="question">
+        <p>9. What is the square root of 81?</p>
+        <input type="text" name="q9">
+      </div>
+
+      <div class="question">
+        <p>10. What instrument has keys, pedals, and strings?</p>
+        <input type="text" name="q10">
+      </div>
+
+      <button type="submit">Submit Answers</button>
+    </form>
+
+    <div id="result"></div>
   </div>
 
-  <div class="question">
-    <p>2. What color do you get when you mix blue and yellow?</p>
-    <input type="text" name="q2">
-  </div>
+  <script>
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
 
-  <div class="question">
-    <p>3. How many days are in a leap year?</p>
-    <input type="text" name="q3">
-  </div>
+      const answers = {
+        q1: "paris",
+        q2: "green",
+        q3: "366",
+        q4: "mars",
+        q5: "30",
+        q6: "shakespeare",
+        q7: "carbon dioxide",
+        q8: "pacific",
+        q9: "9",
+        q10: "piano"
+      };
 
-  <div class="question">
-    <p>4. What planet is known as the Red Planet?</p>
-    <input type="text" name="q4">
-  </div>
+      let score = 0;
+      for (let i = 1; i <= 10; i++) {
+        const userAnswer = document.querySelector(`input[name="q${i}"]`).value.trim().toLowerCase();
+        if (userAnswer === answers[`q${i}`]) score++;
+      }
 
-  <div class="question">
-    <p>5. What is 5 × 6?</p>
-    <input type="text" name="q5">
-  </div>
+      let resultText = "";
+      if (score <= 3) resultText = "Keep trying! You scored " + score + "/10.";
+      else if (score <= 7) resultText = "Nice work! You scored " + score + "/10.";
+      else resultText = "Excellent! You scored " + score + "/10.";
 
-  <div class="question">
-    <p>6. Who wrote “Romeo and Juliet”?</p>
-    <input type="text" name="q6">
-  </div>
-
-  <div class="question">
-    <p>7. What gas do plants absorb from the air?</p>
-    <input type="text" name="q7">
-  </div>
-
-  <div class="question">
-    <p>8. What is the largest ocean on Earth?</p>
-    <input type="text" name="q8">
-  </div>
-
-  <div class="question">
-    <p>9. What is the square root of 81?</p>
-    <input type="text" name="q9">
-  </div>
-
-  <div class="question">
-    <p>10. What instrument has keys, pedals, and strings?</p>
-    <input type="text" name="q10">
-  </div>
-
-  <button type="submit">Submit Answers</button>
-</form>
-
-<div id="result"></div>
-
-<script>
-document.getElementById("quizForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const answers = {
-    q1: "paris",
-    q2: "green",
-    q3: "366",
-    q4: "mars",
-    q5: "30",
-    q6: "shakespeare",
-    q7: "carbon dioxide",
-    q8: "pacific",
-    q9: "9",
-    q10: "piano"
-  };
-
-  let score = 0;
-  for (let i = 1; i <= 10; i++) {
-    const userAnswer = document.querySelector(`input[name="q${i}"]`).value.trim().toLowerCase();
-    if (userAnswer === answers[`q${i}`]) score++;
-  }
-
-  let resultText = "";
-  if (score <= 3) resultText = "Keep trying! You scored " + score + "/10.";
-  else if (score <= 7) resultText = "Nice work! You scored " + score + "/10.";
-  else resultText = "Excellent! You scored " + score + "/10.";
-
-  document.getElementById("result").innerText = resultText;
-});
-</script>
+      const resultBox = document.getElementById("result");
+      resultBox.style.display = "block";
+      resultBox.innerText = resultText;
+    });
+  </script>
 
 </body>
 </html>
