@@ -10,6 +10,7 @@
       font-family: 'Segoe UI', Arial, sans-serif;
       background: #f5f9ff;
       margin: 0;
+      
       padding: 0;
       opacity: 0;
       animation: fadeInBody 0.8s ease forwards;
@@ -182,6 +183,9 @@
   text-align: center;
   box-shadow: 0 6px 25px rgba(0,0,0,0.2);
 }
+.tile.yellow {
+  background: #fbc02d; /* VAR yellow */
+}
 
 .close-btn {
   padding: 6px 10px;
@@ -329,18 +333,29 @@ results.forEach((correct, index) => {
   tile.style.animationDelay = (index * 0.05) + "s";
   tile.id = "tile" + index;
 
-  const buttonRow = document.createElement("div");
-  buttonRow.style.display = "flex";
-  buttonRow.style.gap = "6px";
-  buttonRow.style.marginTop = "4px";
-
   const varBtn = document.createElement("button");
   varBtn.innerText = "VAR";
   varBtn.className = "close-btn";
+  varBtn.style.marginTop = "6px";
   varBtn.onclick = () => {
-    tile.classList.remove("green", "red");
-    tile.classList.add("yellow");
+    const choice = prompt(
+      "VAR Review:\n\n1️⃣ I Misspelled That!\n2️⃣ Nah, I’m Contesting That!\n\nType 1 or 2:"
+    );
+
+    if (choice === "1") {
+      tile.classList.remove("red", "yellow");
+      tile.classList.add("green");
+    } else if (choice === "2") {
+      tile.classList.remove("green", "red");
+      tile.classList.add("yellow");
+    }
   };
+
+  tileGroup.appendChild(tile);
+  tileGroup.appendChild(varBtn);
+  tiles.appendChild(tileGroup);
+});
+
 
   const misBtn = document.createElement("button");
   misBtn.innerText = "Misspelled Right";
@@ -387,7 +402,9 @@ function shareResult() {
 
     let emojiGrid = "";
     tiles.forEach(tile => {
-      emojiGrid += tile.classList.contains("green") ? "🟩" : "🟥";
+        if (tile.classList.contains("green")) emojiGrid += "🟩";
+  else if (tile.classList.contains("yellow")) emojiGrid += "🟨";
+  else emojiGrid += "🟥";
     });
 
     const shareText =
