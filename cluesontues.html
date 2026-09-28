@@ -235,18 +235,17 @@
   </div>
 
   <script>
-    function closePopup() {
-      document.getElementById("overlay").style.display = "none";
-    }
+  function closePopup() {
+  document.getElementById("overlay").style.display = "none";
+}
 
-    document.getElementById("quizForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
+// Load questions ON PAGE LOAD (not on submit)
 fetch("questions.json")
   .then(response => response.json())
   .then(questions => {
-    const container = document.getElementById("questionsContainer");
 
+    // Build the question fields
+    const container = document.getElementById("questionsContainer");
     questions.forEach((q, index) => {
       const div = document.createElement("div");
       div.className = "question";
@@ -257,6 +256,7 @@ fetch("questions.json")
       container.appendChild(div);
     });
 
+    // Handle quiz submission
     document.getElementById("quizForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
@@ -286,30 +286,15 @@ fetch("questions.json")
     });
   });
 
-
-      document.getElementById("scoreText").innerText = score + "/10";
-
-      const tiles = document.getElementById("tiles");
-      tiles.innerHTML = "";
-
-      results.forEach((correct, index) => {
-        const tile = document.createElement("div");
-        tile.className = "tile " + (correct ? "green" : "red");
-        tile.style.animationDelay = (index * 0.05) + "s";
-        tiles.appendChild(tile);
-      });
-
-      document.getElementById("overlay").style.display = "flex";
-    });
-    function shareResult() {
+// iPhone‑safe share button
+function shareResult() {
   setTimeout(() => {
     const scoreText = document.getElementById("scoreText").innerText;
     const tiles = document.querySelectorAll(".tile");
 
     let emojiGrid = "";
     tiles.forEach(tile => {
-      if (tile.classList.contains("green")) emojiGrid += "🟩";
-      else emojiGrid += "🟥";
+      emojiGrid += tile.classList.contains("green") ? "🟩" : "🟥";
     });
 
     const shareText =
@@ -317,16 +302,13 @@ fetch("questions.json")
       `${emojiGrid}\n` +
       `https://harvic20.github.io/cluesontues.html`;
 
-    // iPhone-safe clipboard fallback
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(shareText).then(() => {
         document.getElementById("copyConfirm").style.display = "block";
         setTimeout(() => {
           document.getElementById("copyConfirm").style.display = "none";
         }, 2000);
-      }).catch(() => {
-        fallbackCopy(shareText);
-      });
+      }).catch(() => fallbackCopy(shareText));
     } else {
       fallbackCopy(shareText);
     }
