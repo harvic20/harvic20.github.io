@@ -59,7 +59,6 @@
       animation: questionSlideIn 0.6s ease forwards;
     }
 
-    /* Staggered question animation */
     .question:nth-child(1) { animation-delay: 0.2s; }
     .question:nth-child(2) { animation-delay: 0.3s; }
     .question:nth-child(3) { animation-delay: 0.4s; }
@@ -76,12 +75,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-    }
-
-    .question p {
-      font-weight: 600;
-      color: #0a4dbf;
-      margin-bottom: 8px;
     }
 
     input[type="text"] {
@@ -125,25 +118,90 @@
       transform: scale(1.03);
     }
 
-    #result {
-      margin-top: 30px;
-      padding: 20px;
-      background: #eaf1ff;
-      border-left: 6px solid #0a4dbf;
-      border-radius: 8px;
-      font-size: 1.2rem;
-      color: #083a8f;
+    /* POPUP OVERLAY */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.45);
       display: none;
-      opacity: 0;
-      transform: translateX(-20px) scale(0.95);
+      justify-content: center;
+      align-items: center;
+      animation: fadeInOverlay 0.3s ease forwards;
     }
 
-    @keyframes resultReveal {
+    @keyframes fadeInOverlay {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* POPUP BOX */
+    .popup {
+      background: white;
+      padding: 30px;
+      width: 350px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+      transform: scale(0.8);
+      opacity: 0;
+      animation: popupIn 0.4s ease forwards;
+    }
+
+    @keyframes popupIn {
       to {
+        transform: scale(1);
         opacity: 1;
-        transform: translateX(0) scale(1);
       }
     }
+
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin: 20px auto;
+      max-width: 250px;
+    }
+
+    .tile {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: #dce6ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: white;
+      font-size: 1.1rem;
+      animation: tilePop 0.3s ease;
+    }
+
+    @keyframes tilePop {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .tile.green { background: #4caf50; }
+    .tile.red { background: #e53935; }
+
+    .close-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #0a4dbf;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .close-btn:hover {
+      background: #083a8f;
+    }
+
   </style>
 </head>
 
@@ -152,63 +210,38 @@
     <h1>Clues on Tues Quiz</h1>
 
     <form id="quizForm">
-      <div class="question">
-        <p>1. What is the capital of France?</p>
-        <input type="text" name="q1">
-      </div>
-
-      <div class="question">
-        <p>2. What color do you get when you mix blue and yellow?</p>
-        <input type="text" name="q2">
-      </div>
-
-      <div class="question">
-        <p>3. How many days are in a leap year?</p>
-        <input type="text" name="q3">
-      </div>
-
-      <div class="question">
-        <p>4. What planet is known as the Red Planet?</p>
-        <input type="text" name="q4">
-      </div>
-
-      <div class="question">
-        <p>5. What is 5 × 6?</p>
-        <input type="text" name="q5">
-      </div>
-
-      <div class="question">
-        <p>6. Who wrote “Romeo and Juliet”?</p>
-        <input type="text" name="q6">
-      </div>
-
-      <div class="question">
-        <p>7. What gas do plants absorb from the air?</p>
-        <input type="text" name="q7">
-      </div>
-
-      <div class="question">
-        <p>8. What is the largest ocean on Earth?</p>
-        <input type="text" name="q8">
-      </div>
-
-      <div class="question">
-        <p>9. What is the square root of 81?</p>
-        <input type="text" name="q9">
-      </div>
-
-      <div class="question">
-        <p>10. What instrument has keys, pedals, and strings?</p>
-        <input type="text" name="q10">
-      </div>
+      <div class="question"><p>1. What is the capital of France?</p><input type="text" name="q1"></div>
+      <div class="question"><p>2. What color do you get when you mix blue and yellow?</p><input type="text" name="q2"></div>
+      <div class="question"><p>3. How many days are in a leap year?</p><input type="text" name="q3"></div>
+      <div class="question"><p>4. What planet is known as the Red Planet?</p><input type="text" name="q4"></div>
+      <div class="question"><p>5. What is 5 × 6?</p><input type="text" name="q5"></div>
+      <div class="question"><p>6. Who wrote “Romeo and Juliet”?</p><input type="text" name="q6"></div>
+      <div class="question"><p>7. What gas do plants absorb from the air?</p><input type="text" name="q7"></div>
+      <div class="question"><p>8. What is the largest ocean on Earth?</p><input type="text" name="q8"></div>
+      <div class="question"><p>9. What is the square root of 81?</p><input type="text" name="q9"></div>
+      <div class="question"><p>10. What instrument has keys, pedals, and strings?</p><input type="text" name="q10"></div>
 
       <button type="submit">Submit Answers</button>
     </form>
+  </div>
 
-    <div id="result"></div>
+  <!-- POPUP -->
+  <div class="overlay" id="overlay">
+    <div class="popup">
+      <h2>Your Score</h2>
+      <p id="scoreText"></p>
+
+      <div class="tiles" id="tiles"></div>
+
+      <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
   </div>
 
   <script>
+    function closePopup() {
+      document.getElementById("overlay").style.display = "none";
+    }
+
     document.getElementById("quizForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
@@ -226,21 +259,28 @@
       };
 
       let score = 0;
+      let results = [];
+
       for (let i = 1; i <= 10; i++) {
         const userAnswer = document.querySelector(`input[name="q${i}"]`).value.trim().toLowerCase();
-        if (userAnswer === answers[`q${i}`]) score++;
+        const correct = userAnswer === answers[`q${i}`];
+        results.push(correct);
+        if (correct) score++;
       }
 
-      let resultText = "";
-      if (score <= 3) resultText = "Keep trying! You scored " + score + "/10.";
-      else if (score <= 7) resultText = "Nice work! You scored " + score + "/10.";
-      else resultText = "Excellent! You scored " + score + "/10.";
+      document.getElementById("scoreText").innerText = score + "/10";
 
-      const resultBox = document.getElementById("result");
-      resultBox.style.display = "block";
-      resultBox.innerText = resultText;
+      const tiles = document.getElementById("tiles");
+      tiles.innerHTML = "";
 
-      resultBox.style.animation = "resultReveal 0.6s ease forwards";
+      results.forEach((correct, index) => {
+        const tile = document.createElement("div");
+        tile.className = "tile " + (correct ? "green" : "red");
+        tile.style.animationDelay = (index * 0.05) + "s";
+        tiles.appendChild(tile);
+      });
+
+      document.getElementById("overlay").style.display = "flex";
     });
   </script>
 
