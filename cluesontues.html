@@ -360,6 +360,7 @@
 
 <script>
   let totalScore = 0;
+  let quizSubmitted = false;
  // Load questions when page loads
 fetch("questions.json")
   .then(response => response.json())
@@ -385,6 +386,14 @@ fetch("questions.json")
     document.getElementById("quizForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
+      
+  if (quizSubmitted) {
+    // ⭐ Already submitted → just reopen popup
+    document.getElementById("overlay").style.display = "flex";
+    return;
+  }
+
+  quizSubmitted = true; // ⭐ First time only
       let results = [];
 
       questions.forEach((q, index) => {
