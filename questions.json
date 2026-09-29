@@ -1,44 +1,46 @@
-[
-    "week": 6,
+{
+  "week": 6,
   "theme": "Sports",
-  {
-    "question": "Clue1 Clue2",
-    "answer": "paris"
-  },
-  {
-    "question": "Clue1 Clue2",
-    "answer": "green"
-  },
-  {
-    "question": "Clue1 Clue2",
-    "answer": "366"
-  },
-  {
-    "question": "Clue1 Clue2",
-    "answer": "mars"
-  },
-  {
-    "question": "Clue1 Clue2",
-    "answer": "30"
-  },
-  {
-    "question": "Clue1 Clue2",
-    "answer": "shakespeare"
-  },
-  {
-    "question": "Clue1 Clue2",
-    "answer": "carbon dioxide"
-  },
-  {
-    "question": "Clue1 Clue2",
-    "answer": "pacific"
-  },
-  {
-    "question": "Clue1 Clue2",
-    "answer": "9"
-  },
-  {
-    "question": "Clue1 Clue2",
-    "answer": "piano"
-  }
-]
+  "questions": [
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "paris"
+    },
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "green"
+    },
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "366"
+    },
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "mars"
+    },
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "30"
+    },
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "shakespeare"
+    },
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "carbon dioxide"
+    },
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "pacific"
+    },
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "9"
+    },
+    {
+      "clue": "Clue1 Clue2",
+      "answer": "piano"
+    }
+  ]
+}
