@@ -280,12 +280,14 @@
       <div class="tiles" id="tiles"></div>
       <div id="correctAnswers" style="margin-top:8px; text-align:left;"></div>
 
+
       <button class="close-btn" onclick="openVAR()">VAR</button>
-      <button class="close-btn" onclick="shareResult()">Share Result</button>
+<button class="close-btn" onclick="shareResult()">Share Result</button>
 <button class="close-btn" onclick="closePopup()">Close</button>
 <p id="copyConfirm" style="display:none; margin-top:6px; color:#0a4dbf; font-weight:bold;">
   Copied to clipboard!
 </p>
+
 
     </div>
   </div>
@@ -389,6 +391,57 @@ function openVAR() {
     tile.classList.add("yellow");
   }
 }
+  function closePopup() {
+  const overlay = document.getElementById("overlay");
+  if (overlay) {
+    overlay.style.display = "none";
+  }
+}
+function shareResult() {
+  const scoreText = document.getElementById("scoreText").innerText;
+  const tiles = document.querySelectorAll(".tile");
+
+  let emojiGrid = "";
+  tiles.forEach(tile => {
+    if (tile.classList.contains("green")) emojiGrid += "🟩";
+    else if (tile.classList.contains("yellow")) emojiGrid += "🟨";
+    else emojiGrid += "🟥";
+  });
+
+  const shareText =
+    `Try Beat Me I Got: ${scoreText}\n` +
+    `${emojiGrid}\n` +
+    `https://harvic20.github.io/cluesontues.html`;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(shareText)
+      .then(() => {
+        const confirmBox = document.getElementById("copyConfirm");
+        if (confirmBox) {
+          confirmBox.style.display = "block";
+          setTimeout(() => confirmBox.style.display = "none", 2000);
+        }
+      })
+      .catch(() => fallbackCopy(shareText));
+  } else {
+    fallbackCopy(shareText);
+  }
+}
+function fallbackCopy(text) {
+  const temp = document.createElement("textarea");
+  temp.value = text;
+  document.body.appendChild(temp);
+  temp.select();
+  document.execCommand("copy");
+  document.body.removeChild(temp);
+
+  const confirmBox = document.getElementById("copyConfirm");
+  if (confirmBox) {
+    confirmBox.style.display = "block";
+    setTimeout(() => confirmBox.style.display = "none", 2000);
+  }
+}
+
   console.log("2");
 </script>
     </body>
