@@ -119,7 +119,7 @@
     }
 
     input[type="text"] {
-      width: 100% -12;
+      width: 100% -12px;
       padding: 12px;
       font-size: 1rem;
       border: 2px solid #dce6ff;
@@ -330,6 +330,7 @@
   </div>
 
 <script>
+  let totalScore = 0;
  // Load questions when page loads
 fetch("questions.json")
   .then(response => response.json())
@@ -355,17 +356,16 @@ fetch("questions.json")
     document.getElementById("quizForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      let score = 0;
       let results = [];
 
       questions.forEach((q, index) => {
         const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
         const correct = userAnswer === q.answer.toLowerCase();
         results.push(correct);
-        if (correct) score++;
+        if (correct) totalScore++;
       });
 
-      document.getElementById("scoreText").innerText = score + "/" + questions.length;
+      document.getElementById("scoreText").innerText = totalScore + "/" + questions.length;
 
       const tiles = document.getElementById("tiles");
       tiles.innerHTML = "";
@@ -403,11 +403,11 @@ questions.forEach((q, index) => {
   const clue2 = parts[1] || "";
 
   answersBox.innerHTML += `
-    <p>
-      ${correct ? "🟩" : "🟥"} 
-      <strong>${index + 1}.</strong> 
-      <strong>${clue1} + ${clue2} = ${q.answer}</strong>
-    </p>
+<p id="answerRow${index}">
+  ${correct ? "🟩" : "🟥"}
+  <strong>${index + 1}.</strong>
+  ${clue1} + ${clue2} = <strong>${q.answer}</strong>
+</p>
   `;
 });
 
@@ -517,18 +517,41 @@ function selectVarQuestion(i) {
 
 function applyVar(type) {
   const tile = document.getElementById("tile" + varIndex);
+  const answerRow = document.getElementById("answerRow" + varIndex);
+
+  // Remove previous score for this tile
+  if (tile.dataset.score) {
+    totalScore -= parseFloat(tile.dataset.score);
+  }
 
   if (type === "misspelled") {
+    // Full point
     tile.classList.remove("red", "yellow");
     tile.classList.add("green");
+
+    answerRow.innerHTML = answerRow.innerHTML.replace(/🟥|🟨|🟩/, "🟩");
+
+    tile.dataset.score = "1";
+    totalScore += 1;
+
   } else {
-    tile.classList.remove("green", "red");
+    // Half point
+    tile.classList.remove("red", "green");
     tile.classList.add("yellow");
+
+    answerRow.innerHTML = answerRow.innerHTML.replace(/🟥|🟨|🟩/, "🟨");
+
+    tile.dataset.score = "0.5";
+    totalScore += 0.5;
   }
+
+  // Update score display
+  document.getElementById("scoreText").innerText = totalScore.toString();
 
   // Close mini popup
   document.getElementById("varPopup").style.display = "none";
 }
+
 
 
 
