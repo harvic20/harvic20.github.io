@@ -35,12 +35,12 @@
       "answers": ["windsurfing"]
     },
     {
+      "clue": "Sandy Gumshield",
+       "answers": ["Rugby"]
+    }
+    {
       "clue": "Summer Stumps",
        "answers": ["cricket"]
-    },
-    {
-      "clue": "Clue1 Clue2",
-       "answers": ["carbon dioxide", "co2"]
     }
   ]
 }
