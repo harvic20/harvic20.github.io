@@ -431,25 +431,33 @@ questions.forEach((q, index) => {
 
       const tiles = document.getElementById("tiles");
       tiles.innerHTML = "";
+questions.forEach((q, index) => {
+  const input = document.querySelector(`input[name="q${index}"]`);
+  const userAnswer = input.value.trim().toLowerCase();
 
-results.forEach((correct, index) => {
-  const tileGroup = document.createElement("div");
-  tileGroup.style.display = "flex";
-  tileGroup.style.flexDirection = "column";
-  tileGroup.style.alignItems = "center";
-  tileGroup.style.margin = "2px";
+  // ⭐ Always produce an array of answers
+  const answerList = Array.isArray(q.answers)
+    ? q.answers
+    : [q.answer];
 
-  const tile = document.createElement("div");
-  tile.className = "tile " + (correct ? "green" : "red");
-  tile.style.animationDelay = (index * 0.05) + "s";
-  tile.id = "tile" + index;
+  const correct = answerList.some(a => userAnswer === a.toLowerCase());
 
-  // ⭐ Store the score for VAR
-  tile.dataset.score = correct ? "1" : "0";
+  // Freeze input
+  input.disabled = true;
+  input.style.backgroundColor = correct ? "#b6ffb6" : "#ffb6b6";
 
-  tileGroup.appendChild(tile);
-  tiles.appendChild(tileGroup);
+  // Store result
+  results.push(correct);
+
+  // Score
+  if (correct) totalScore++;
+
+  // Reveal correct answer
+  const answerReveal = document.createElement("p");
+  answerReveal.innerHTML = `Correct Answer: <strong>${answerList[0]}</strong>`;
+  input.parentNode.appendChild(answerReveal);
 });
+
 
 
 const answersBox = document.getElementById("correctAnswers");
