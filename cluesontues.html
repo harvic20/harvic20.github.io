@@ -370,22 +370,25 @@ fetch("questions.json")
       const tiles = document.getElementById("tiles");
       tiles.innerHTML = "";
 
-      results.forEach((correct, index) => {
-        const tileGroup = document.createElement("div");
-        tileGroup.style.display = "flex";
-        tileGroup.style.flexDirection = "column";
-        tileGroup.style.alignItems = "center";
-        tileGroup.style.margin = "2px";
+results.forEach((correct, index) => {
+  const tileGroup = document.createElement("div");
+  tileGroup.style.display = "flex";
+  tileGroup.style.flexDirection = "column";
+  tileGroup.style.alignItems = "center";
+  tileGroup.style.margin = "2px";
 
-        const tile = document.createElement("div");
-        tile.className = "tile " + (correct ? "green" : "red");
-        tile.style.animationDelay = (index * 0.05) + "s";
-        tile.id = "tile" + index;
+  const tile = document.createElement("div");
+  tile.className = "tile " + (correct ? "green" : "red");
+  tile.style.animationDelay = (index * 0.05) + "s";
+  tile.id = "tile" + index;
 
+  // ⭐ Store the score for VAR
+  tile.dataset.score = correct ? "1" : "0";
 
-        tileGroup.appendChild(tile);
-        tiles.appendChild(tileGroup);
-      });
+  tileGroup.appendChild(tile);
+  tiles.appendChild(tileGroup);
+});
+
 
 const answersBox = document.getElementById("correctAnswers");
 answersBox.innerHTML = "<h3>Correct Answers:</h3>";
