@@ -637,7 +637,8 @@ function applyVar(type) {
     answerRow.innerHTML = answerRow.innerHTML.replace(/🟥|🟨|🟩/, "🟨");
 
     tile.dataset.score = "0.5";
-    totalScore += 0.5;
+    let temp1 = totalscore;
+    totalScore =  temp1 + 0.5;
   }
 
   // Update score display
