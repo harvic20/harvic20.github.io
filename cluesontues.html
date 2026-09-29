@@ -300,6 +300,9 @@ fetch("questions.json")
   .then(response => response.json())
   .then(questions => {
 
+    document.getElementById("themeTitle").innerText =
+      `CluesOnTues #${data.week} — ${data.theme}`;
+    
     // Build questions
     const container = document.getElementById("questionsContainer");
     questions.forEach((q, index) => {
