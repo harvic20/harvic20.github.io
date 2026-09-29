@@ -394,19 +394,38 @@ fetch("questions.json")
   }
 
   quizSubmitted = true; // ⭐ First time only
-      let results = [];
+let results = [];
 
-      questions.forEach((q, index) => {
-        const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
-        const correct = userAnswer === q.answer.toLowerCase();
-          // ⭐ Freeze input
+questions.forEach((q, index) => {
+
+  // ⭐ You forgot this line — this is why input was undefined
+  const input = document.querySelector(`input[name="q${index}"]`);
+
+  const userAnswer = input.value.trim().toLowerCase();
+  const correct = userAnswer === q.answer.toLowerCase();
+
+  // ⭐ Freeze input
   input.disabled = true;
 
   // ⭐ Colour input
-  input.style.backgroundColor = correct ? "#b6ffb6" : "#ffb6b6"; // green/red
-        results.push(correct);
-        if (correct) totalScore++;
-      });
+  input.style.backgroundColor = correct ? "#b6ffb6" : "#ffb6b6";
+
+  // ⭐ Store result
+  results.push(correct);
+
+  // ⭐ Score
+  if (correct) totalScore++;
+
+  // ⭐ Show correct answer under the input
+  const answerReveal = document.createElement("p");
+  answerReveal.className = "correct-answer-text";
+  answerReveal.innerHTML = `Correct Answer: <strong>${q.answer}</strong>`;
+  answerReveal.style.margin = "4px 0 10px 0";
+  answerReveal.style.color = correct ? "#0a4dbf" : "#d00000";
+
+  input.parentNode.appendChild(answerReveal);
+});
+
       
       document.getElementById("scoreText").innerText = totalScore + "/" + questions.length;
       dropConfetti(totalScore);
