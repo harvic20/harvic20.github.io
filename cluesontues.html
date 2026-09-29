@@ -346,20 +346,27 @@ fetch("questions.json")
         tiles.appendChild(tileGroup);
       });
 
-      const answersBox = document.getElementById("correctAnswers");
-      answersBox.innerHTML = "<h3>Correct Answers:</h3>";
+const answersBox = document.getElementById("correctAnswers");
+answersBox.innerHTML = "<h3>Correct Answers:</h3>";
 
-      questions.forEach((q, index) => {
-        const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
-        const correct = userAnswer === q.answer.toLowerCase();
+questions.forEach((q, index) => {
+  const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
+  const correct = userAnswer === q.answer.toLowerCase();
 
-        answersBox.innerHTML += `
-          <p>
-            ${correct ? "🟩" : "🟥"} 
-            <strong>${index + 1}.</strong> ${q.answer}
-          </p>
-        `;
-      });
+  // Split the clue into two parts
+  const parts = q.clue.split(" ");
+  const clue1 = parts[0] || "";
+  const clue2 = parts[1] || "";
+
+  answersBox.innerHTML += `
+    <p>
+      ${correct ? "🟩" : "🟥"} 
+      <strong>${index + 1}.</strong> 
+      ${clue1} + ${clue2} = <strong>${q.answer}</strong>
+    </p>
+  `;
+});
+
 
       document.getElementById("overlay").style.display = "flex";
     });
