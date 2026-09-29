@@ -361,6 +361,7 @@
 <script>
   let totalScore = 0;
   let quizSubmitted = false;
+  let results = [];
  // Load questions when page loads
 fetch("questions.json")
   .then(response => response.json())
