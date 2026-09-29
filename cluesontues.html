@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clues on Tues Quiz V1.1</title>
+  <title>Clues on Tues Quiz</title>
 
   <style>
     #correctAnswers p {
@@ -403,6 +403,33 @@ if (submitButton) {
        console.log("test");
        console.log("test2");
 
+questions.forEach((q, index) => {
+  const input = document.querySelector(`input[name="q${index}"]`);
+  const userAnswer = input.value.trim().toLowerCase();
+
+  // ⭐ Normalise to an array of answers
+  const answerList = Array.isArray(q.answers)
+    ? q.answers
+    : [q.answer]; // fallback for old JSON
+
+  const correct = answerList.some(a => userAnswer === a.toLowerCase());
+  
+  input.disabled = true;
+  input.style.backgroundColor = correct ? "#b6ffb6" : "#ffb6b6";
+
+  if (correct) totalScore++;
+
+  const mainAnswer = answerList[0];
+
+  const answerReveal = document.createElement("p");
+  answerReveal.className = "correct-answer-text";
+  answerReveal.innerHTML = `Correct Answer: <strong>${mainAnswer}</strong>`;
+  answerReveal.style.margin = "4px 0 10px 0";
+  answerReveal.style.color = correct ? "#0a4dbf" : "#d00000";
+
+  input.parentNode.appendChild(answerReveal);
+});
+  
       
       document.getElementById("scoreText").innerText = totalScore + "/" + questions.length;
       dropConfetti(totalScore);
@@ -610,8 +637,7 @@ function applyVar(type) {
     answerRow.innerHTML = answerRow.innerHTML.replace(/🟥|🟨|🟩/, "🟨");
 
     tile.dataset.score = "0.5";
-    let temp1 = totalscore;
-    totalScore =  temp1 + 0.5;
+    totalScore += 0.5;
   }
 
   // Update score display
