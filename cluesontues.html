@@ -399,8 +399,11 @@ fetch("questions.json")
       questions.forEach((q, index) => {
         const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
         const correct = userAnswer === q.answer.toLowerCase();
-        input.disabled = true;
-        input.style.backgroundColor = correct ? "#b6ffb6" : "#ffb6b6"; // green/red
+          // ⭐ Freeze input
+  input.disabled = true;
+
+  // ⭐ Colour input
+  input.style.backgroundColor = correct ? "#b6ffb6" : "#ffb6b6"; // green/red
         results.push(correct);
         if (correct) totalScore++;
       });
