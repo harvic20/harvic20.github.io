@@ -298,11 +298,12 @@
  // Load questions when page loads
 fetch("questions.json")
   .then(response => response.json())
-  .then(questions => {
+  .then(data => {
 
     document.getElementById("themeTitle").innerText =
-      `CluesOnTues #${week} — ${theme}`;
-    
+      `CluesOnTues #${data.week} — ${data.theme}`;
+
+    const questions = data.questions;
     // Build questions
     const container = document.getElementById("questionsContainer");
     questions.forEach((q, index) => {
