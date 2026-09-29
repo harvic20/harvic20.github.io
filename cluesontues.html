@@ -397,13 +397,11 @@ fetch("questions.json")
 let results = [];
 
 questions.forEach((q, index) => {
-
-  // ⭐ You forgot this line — this is why input was undefined
   const input = document.querySelector(`input[name="q${index}"]`);
-
   const userAnswer = input.value.trim().toLowerCase();
+
+  // ⭐ Check against ALL alternative answers
   const correct = q.answers.some(a => userAnswer === a.toLowerCase());
-  const mainAnswer = q.answers[0];
 
   // ⭐ Freeze input
   input.disabled = true;
@@ -411,21 +409,19 @@ questions.forEach((q, index) => {
   // ⭐ Colour input
   input.style.backgroundColor = correct ? "#b6ffb6" : "#ffb6b6";
 
-  // ⭐ Store result
-  results.push(correct);
-
   // ⭐ Score
   if (correct) totalScore++;
 
-  // ⭐ Show correct answer under the input
+  // ⭐ Reveal correct answer (first one in the list)
   const answerReveal = document.createElement("p");
   answerReveal.className = "correct-answer-text";
-  answerReveal.innerHTML = `Correct Answer: <strong>${mainAnswer}</strong>`;
+  answerReveal.innerHTML = `Correct Answer: <strong>${q.answers[0]}</strong>`;
   answerReveal.style.margin = "4px 0 10px 0";
   answerReveal.style.color = correct ? "#0a4dbf" : "#d00000";
 
   input.parentNode.appendChild(answerReveal);
 });
+
 
       
       document.getElementById("scoreText").innerText = totalScore + "/" + questions.length;
