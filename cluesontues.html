@@ -400,27 +400,29 @@ questions.forEach((q, index) => {
   const input = document.querySelector(`input[name="q${index}"]`);
   const userAnswer = input.value.trim().toLowerCase();
 
-  // ⭐ Check against ALL alternative answers
-  const correct = q.answers.some(a => userAnswer === a.toLowerCase());
+  // ⭐ Normalise to an array of answers
+  const answerList = Array.isArray(q.answers)
+    ? q.answers
+    : [q.answer]; // fallback for old JSON
 
-  // ⭐ Freeze input
+  const correct = answerList.some(a => userAnswer === a.toLowerCase());
+
   input.disabled = true;
-
-  // ⭐ Colour input
   input.style.backgroundColor = correct ? "#b6ffb6" : "#ffb6b6";
 
-  // ⭐ Score
   if (correct) totalScore++;
 
-  // ⭐ Reveal correct answer (first one in the list)
+  const mainAnswer = answerList[0];
+
   const answerReveal = document.createElement("p");
   answerReveal.className = "correct-answer-text";
-  answerReveal.innerHTML = `Correct Answer: <strong>${q.answers[0]}</strong>`;
+  answerReveal.innerHTML = `Correct Answer: <strong>${mainAnswer}</strong>`;
   answerReveal.style.margin = "4px 0 10px 0";
   answerReveal.style.color = correct ? "#0a4dbf" : "#d00000";
 
   input.parentNode.appendChild(answerReveal);
 });
+
 
 
       
