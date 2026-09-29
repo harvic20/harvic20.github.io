@@ -402,7 +402,8 @@ questions.forEach((q, index) => {
   const input = document.querySelector(`input[name="q${index}"]`);
 
   const userAnswer = input.value.trim().toLowerCase();
-  const correct = userAnswer === q.answer.toLowerCase();
+  const correct = q.answers.some(a => userAnswer === a.toLowerCase());
+  const mainAnswer = q.answers[0];
 
   // ⭐ Freeze input
   input.disabled = true;
@@ -419,7 +420,7 @@ questions.forEach((q, index) => {
   // ⭐ Show correct answer under the input
   const answerReveal = document.createElement("p");
   answerReveal.className = "correct-answer-text";
-  answerReveal.innerHTML = `Correct Answer: <strong>${q.answer}</strong>`;
+  answerReveal.innerHTML = `Correct Answer: <strong>${mainAnswer}</strong>`;
   answerReveal.style.margin = "4px 0 10px 0";
   answerReveal.style.color = correct ? "#0a4dbf" : "#d00000";
 
@@ -458,7 +459,8 @@ answersBox.innerHTML = "<h3>Correct Answers:</h3>";
 
 questions.forEach((q, index) => {
   const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
-  const correct = userAnswer === q.answer.toLowerCase();
+  const correct = q.answers.some(a => userAnswer === a.toLowerCase());
+
 
   // Split the clue into two parts
   const parts = q.clue.split(" ");
