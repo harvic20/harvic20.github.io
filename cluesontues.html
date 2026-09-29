@@ -20,6 +20,34 @@
       opacity: 0;
       animation: fadeInBody 0.8s ease forwards;
     }
+    #confettiContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  font-size: 2rem;
+  animation: fall 1.5s linear forwards;
+  opacity: 0.9;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-50px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
 @media (max-width: 600px) {
   .container {
     width: 92%;
@@ -297,7 +325,7 @@
       <button type="submit">Submit Answers</button>
     </form>
   </div>
-
+<div id="confettiContainer"></div>
   <!-- POPUP -->
   <div class="overlay" id="overlay">
     <div class="popup">
@@ -364,8 +392,9 @@ fetch("questions.json")
         results.push(correct);
         if (correct) totalScore++;
       });
-
+      
       document.getElementById("scoreText").innerText = totalScore + "/" + questions.length;
+      dropConfetti(totalScore);
 
       const tiles = document.getElementById("tiles");
       tiles.innerHTML = "";
@@ -552,6 +581,26 @@ function applyVar(type) {
   document.getElementById("varPopup").style.display = "none";
 }
 
+function dropConfetti(score) {
+  const container = document.getElementById("confettiContainer");
+
+  for (let i = 0; i < score; i++) {
+    const conf = document.createElement("div");
+    conf.className = "confetti";
+    conf.innerText = score; // ⭐ the number you scored
+
+    // Random horizontal position
+    conf.style.left = Math.random() * 100 + "vw";
+
+    // Random animation delay for staggered falling
+    conf.style.animationDelay = (Math.random() * 0.5) + "s";
+
+    container.appendChild(conf);
+
+    // Remove after animation
+    setTimeout(() => conf.remove(), 2000);
+  }
+}
 
 
 
