@@ -310,7 +310,7 @@ fetch("questions.json")
       const div = document.createElement("div");
       div.className = "question";
       div.innerHTML = `
-        <p>${index + 1}. ${q.question}</p>
+        <p>${index + 1}. ${q.clue}</p>
         <input type="text" name="q${index}">
       `;
       container.appendChild(div);
