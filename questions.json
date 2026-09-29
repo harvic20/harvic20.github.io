@@ -36,11 +36,11 @@
     },
     {
       "clue": "Clue1 Clue2",
-      "answer": "9"
+       "answers": ["carbon dioxide", "co2"]
     },
     {
       "clue": "Clue1 Clue2",
-      "answer": "piano"
+       "answers": ["carbon dioxide", "co2"]
     }
   ]
 }
