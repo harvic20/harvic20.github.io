@@ -453,10 +453,6 @@ questions.forEach((q, index) => {
   // Score
   if (correct) totalScore++;
 
-  // Reveal correct answer
-  const answerReveal = document.createElement("p");
-  answerReveal.innerHTML = `Correct Answer: <strong>${answerList[0]}</strong>`;
-  input.parentNode.appendChild(answerReveal);
 });
 
      console.log("Ready to generate tiles");
