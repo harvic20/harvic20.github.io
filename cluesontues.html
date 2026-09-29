@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clues on Tues Quiz 1.1</title>
+  <title>Clues on Tues Quiz 1.1.1</title>
 
   <style>
     #correctAnswers p {
@@ -497,7 +497,7 @@ questions.forEach((q, index) => {
 
   answersBox.innerHTML += `
     <p id="answerRow${index}">
-      🟥 <strong>${index + 1}.</strong>
+      ${correct ? "🟩" : "🟥"} <strong>${index + 1}.</strong>
       ${clue1} + ${clue2} = <strong>${answerList[0]}</strong>
     </p>
   `;
