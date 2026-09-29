@@ -458,7 +458,9 @@ answersBox.innerHTML = "<h3>Correct Answers:</h3>";
 questions.forEach((q, index) => {
   const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
   const correct = q.answers.some(a => userAnswer === a.toLowerCase());
-
+  const answerList = Array.isArray(q.answers)
+  ? q.answers
+  : [q.answer];
 
   // Split the clue into two parts
   const parts = q.clue.split(" ");
@@ -469,7 +471,7 @@ questions.forEach((q, index) => {
 <p id="answerRow${index}">
   ${correct ? "🟩" : "🟥"}
   <strong>${index + 1}.</strong>
-  ${clue1} + ${clue2} = <strong>${q.answer}</strong>
+  ${clue1} + ${clue2} = <strong>${answerList[0]}</strong>
 </p>
   `;
 });
