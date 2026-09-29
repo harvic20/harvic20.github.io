@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clues on Tues Quiz 1.1.1</title>
+  <title>Clues on Tues Quiz 1.1.2</title>
 
   <style>
     #correctAnswers p {
@@ -484,16 +484,14 @@ results.forEach((correct, index) => {
 const answersBox = document.getElementById("correctAnswers");
 answersBox.innerHTML = "<h3>Correct Answers:</h3>";
 
-questions.forEach((q, index) => {
-
-  // Normalise answers
-  const answerList = Array.isArray(q.answers)
-    ? q.answers
-    : [q.answer];
-
-  const parts = q.clue.split(" ");
+results.forEach((correct, index) => {
+  const parts = questions[index].clue.split(" ");
   const clue1 = parts[0];
   const clue2 = parts[1];
+
+  const answerList = Array.isArray(questions[index].answers)
+    ? questions[index].answers
+    : [questions[index].answer];
 
   answersBox.innerHTML += `
     <p id="answerRow${index}">
