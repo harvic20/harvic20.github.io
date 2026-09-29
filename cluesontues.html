@@ -406,7 +406,7 @@ questions.forEach((q, index) => {
     : [q.answer]; // fallback for old JSON
 
   const correct = answerList.some(a => userAnswer === a.toLowerCase());
-
+  
   input.disabled = true;
   input.style.backgroundColor = correct ? "#b6ffb6" : "#ffb6b6";
 
@@ -422,8 +422,24 @@ questions.forEach((q, index) => {
 
   input.parentNode.appendChild(answerReveal);
 });
+// ⭐ NOW generate tiles
+results.forEach((correct, index) => {
+  const tileGroup = document.createElement("div");
+  tileGroup.style.display = "flex";
+  tileGroup.style.flexDirection = "column";
+  tileGroup.style.alignItems = "center";
+  tileGroup.style.margin = "2px";
 
+  const tile = document.createElement("div");
+  tile.className = "tile " + (correct ? "green" : "red");
+  tile.style.animationDelay = (index * 0.05) + "s";
+  tile.id = "tile" + index;
 
+  tile.dataset.score = correct ? "1" : "0";
+
+  tileGroup.appendChild(tile);
+  tiles.appendChild(tileGroup);
+});
 
       
       document.getElementById("scoreText").innerText = totalScore + "/" + questions.length;
