@@ -362,7 +362,7 @@ questions.forEach((q, index) => {
     <p>
       ${correct ? "🟩" : "🟥"} 
       <strong>${index + 1}.</strong> 
-      ${clue1} + ${clue2} = <strong>${q.answer}</strong>
+      <strong>${clue1} + ${clue2} = ${q.answer}</strong>
     </p>
   `;
 });
