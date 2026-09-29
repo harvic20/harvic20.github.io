@@ -245,6 +245,35 @@
   border-radius: 8px;
   cursor: pointer;
 }
+    .var-popup {
+  background: white;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 10px;
+  border: 2px solid #0a4dbf;
+}
+
+.var-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.var-square {
+  background: #e3e3e3;
+  padding: 6px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.var-square:hover {
+  background: #cfcfcf;
+}
+
 
     .close-btn:hover {
       background: #083a8f;
@@ -277,6 +306,16 @@
 
       <div class="tiles" id="tiles"></div>
       <div id="correctAnswers" style="margin-top:8px; text-align:left;"></div>
+<div id="varPopup" class="var-popup" style="display:none;">
+  <h3>VAR Review</h3>
+  <p>Select a question:</p>
+  <div id="varQuestionGrid" class="var-grid"></div>
+
+  <div id="varActions" style="display:none; margin-top:10px;">
+    <button class="close-btn" onclick="applyVar('misspelled')">I Misspelled That!</button>
+    <button class="close-btn" onclick="applyVar('contested')">I’m Contesting That!</button>
+  </div>
+</div>
 
 
       <button class="close-btn" onclick="openVAR()">VAR</button>
@@ -450,6 +489,35 @@ function fallbackCopy(text) {
     setTimeout(() => confirmBox.style.display = "none", 2000);
   }
 }
+  .var-popup {
+  background: white;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 10px;
+  border: 2px solid #0a4dbf;
+}
+
+.var-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.var-square {
+  background: #e3e3e3;
+  padding: 6px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.var-square:hover {
+  background: #cfcfcf;
+}
+
 
   console.log("2");
 </script>
