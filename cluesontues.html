@@ -301,7 +301,7 @@ fetch("questions.json")
   .then(questions => {
 
     document.getElementById("themeTitle").innerText =
-      `CluesOnTues #${data.week} — ${data.theme}`;
+      `CluesOnTues #${week} — ${theme}`;
     
     // Build questions
     const container = document.getElementById("questionsContainer");
