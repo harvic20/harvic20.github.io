@@ -234,17 +234,17 @@
     .tile.green { background: #4caf50; }
     .tile.red { background: #e53935; }
 
-    .close-btn {
-      padding: 6px 0px;
-      font-size: 0.8rem;
-      margin-top: 20px 0px;
-      background: #0a4dbf;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+.close-btn {
+  display: block;
+  width: 100%;
+  margin: 6px 0;        /* was likely 15–20px */
+  padding: 10px 0;      /* keeps button height comfortable */
+  background-color: #3b4edc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
     .close-btn:hover {
       background: #083a8f;
