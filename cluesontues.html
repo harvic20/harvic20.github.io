@@ -456,23 +456,21 @@ const answersBox = document.getElementById("correctAnswers");
 answersBox.innerHTML = "<h3>Correct Answers:</h3>";
 
 questions.forEach((q, index) => {
-  const userAnswer = document.querySelector(`input[name="q${index}"]`).value.trim().toLowerCase();
-  const correct = q.answers.some(a => userAnswer === a.toLowerCase());
-  const answerList = Array.isArray(q.answers)
-  ? q.answers
-  : [q.answer];
 
-  // Split the clue into two parts
+  // Normalise answers
+  const answerList = Array.isArray(q.answers)
+    ? q.answers
+    : [q.answer];
+
   const parts = q.clue.split(" ");
-  const clue1 = parts[0] || "";
-  const clue2 = parts[1] || "";
+  const clue1 = parts[0];
+  const clue2 = parts[1];
 
   answersBox.innerHTML += `
-<p id="answerRow${index}">
-  ${correct ? "🟩" : "🟥"}
-  <strong>${index + 1}.</strong>
-  ${clue1} + ${clue2} = <strong>${answerList[0]}</strong>
-</p>
+    <p id="answerRow${index}">
+      🟥 <strong>${index + 1}.</strong>
+      ${clue1} + ${clue2} = <strong>${answerList[0]}</strong>
+    </p>
   `;
 });
 
