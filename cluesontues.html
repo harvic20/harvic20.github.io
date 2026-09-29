@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clues on Tues Quiz11</title>
+  <title>Clues on Tues Quiz12</title>
 
   <style>
     #correctAnswers p {
@@ -424,29 +424,7 @@ questions.forEach((q, index) => {
 
   input.parentNode.appendChild(answerReveal);
 });
-       console.log("Ready to generate tiles");
-      console.log("Results: ", results)
-// ⭐ NOW generate tiles
-results.forEach((correct, index) => {
-  console.log("WE Got here");
-  const tileGroup = document.createElement("div");
-  tileGroup.style.display = "flex";
-  tileGroup.style.flexDirection = "column";
-  tileGroup.style.alignItems = "center";
-  tileGroup.style.margin = "2px";
-
-  const tile = document.createElement("div");
-  tile.className = "tile " + (correct ? "green" : "red");
-  tile.style.animationDelay = (index * 0.05) + "s";
-  tile.id = "tile" + index;
-
-  tile.dataset.score = correct ? "1" : "0";
-
-  tileGroup.appendChild(tile);
-  tiles.appendChild(tileGroup);
-  console.log("Tiles element:", tiles);
-});
-
+  
       
       document.getElementById("scoreText").innerText = totalScore + "/" + questions.length;
       dropConfetti(totalScore);
@@ -481,6 +459,28 @@ questions.forEach((q, index) => {
   input.parentNode.appendChild(answerReveal);
 });
 
+     console.log("Ready to generate tiles");
+      console.log("Results: ", results)
+// ⭐ NOW generate tiles
+results.forEach((correct, index) => {
+  console.log("WE Got here");
+  const tileGroup = document.createElement("div");
+  tileGroup.style.display = "flex";
+  tileGroup.style.flexDirection = "column";
+  tileGroup.style.alignItems = "center";
+  tileGroup.style.margin = "2px";
+
+  const tile = document.createElement("div");
+  tile.className = "tile " + (correct ? "green" : "red");
+  tile.style.animationDelay = (index * 0.05) + "s";
+  tile.id = "tile" + index;
+
+  tile.dataset.score = correct ? "1" : "0";
+
+  tileGroup.appendChild(tile);
+  tiles.appendChild(tileGroup);
+  console.log("Tiles element:", tiles);
+});
 
 
 const answersBox = document.getElementById("correctAnswers");
