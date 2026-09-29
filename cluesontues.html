@@ -360,7 +360,7 @@ questions.forEach((q, index) => {
   const correct = userAnswer === q.answer.toLowerCase();
 
   // Split the clue into two parts
-  const parts = q.question.split(" ");
+  const parts = q.clue.split(" ");
   const clue1 = parts[0] || "";
   const clue2 = parts[1] || "";
 
