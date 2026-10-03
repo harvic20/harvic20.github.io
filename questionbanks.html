@@ -5,7 +5,28 @@
 <button id="btn">Send Test POST</button>
 
 <script>
-const URL = "PASTE_YOUR_EXEC_URL_HERE";
+const URL = "<!DOCTYPE html>
+<html>
+<body>
+
+<button id="btn">Send Test POST</button>
+
+<script>
+const URL = "https://script.google.com/macros/s/AKfycbzRrwvO_i7E6PVlHAykg_As_w5tM-MAUQw_5HmDsf0TgdxdRFPpuRJFTpCqr4s6Imb2EA/exec";
+
+document.getElementById("btn").onclick = () => {
+  fetch(URL, {
+    method: "POST"
+  })
+  .then(r => r.text())
+  .then(t => alert("Response: " + t))
+  .catch(err => alert("Error: " + err));
+};
+</script>
+
+</body>
+</html>
+";
 
 document.getElementById("btn").onclick = () => {
   fetch(URL, {
