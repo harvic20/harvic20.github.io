@@ -1,121 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>CluesOnTues Admin</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f8ff;
-      margin: 0;
-      padding: 0;
-      color: #0b1b3b;
-    }
-    header {
-      background: linear-gradient(135deg, #0b5fff, #3a8dff);
-      color: white;
-      padding: 16px 24px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.4rem;
-    }
-    main {
-      max-width: 960px;
-      margin: 24px auto;
-      padding: 0 16px 32px;
-    }
-    .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      padding: 18px 20px;
-      margin-bottom: 18px;
-      animation: fadeIn 0.4s ease-out;
-    }
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-    input {
-      width: 100%;
-      padding: 6px 8px;
-      border-radius: 6px;
-      border: 1px solid #c7d4ff;
-      font-size: 0.9rem;
-    }
-    textarea {
-      width: 100%;
-      min-height: 160px;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #c7d4ff;
-      font-family: "JetBrains Mono", Consolas, monospace;
-      background: #f9fbff;
-    }
-    .btn {
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.9rem;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-    .btn-primary {
-      background: #0b5fff;
-      color: white;
-    }
-    .btn-secondary {
-      background: #e7efff;
-      color: #0b1b3b;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-</head>
-
-<body>
-<header>
-  <h1>CluesOnTues Admin</h1>
-</header>
-
-<main>
-
-  <section class="card">
-    <h2>Week & Theme</h2>
-    <div class="row">
-      <input id="weekInput" type="number" placeholder="Week number">
-      <input id="themeInput" type="text" placeholder="Theme">
-    </div>
-  </section>
-
-  <section class="card">
-    <h2>10 Questions</h2>
-    <div id="questionsContainer"></div>
-  </section>
-
-  <section class="card">
-    <h2>JSON Output</h2>
-    <textarea id="jsonOutput" readonly></textarea>
-    <button class="btn btn-primary" id="generateJsonBtn">Generate JSON</button>
-    <button class="btn btn-secondary" id="downloadJsonBtn">Download JSON</button>
-  </section>
-
-  <section class="card">
-    <h2>Clue List Output</h2>
-    <textarea id="clueListOutput" readonly></textarea>
-    <button class="btn btn-primary" id="generateClueListBtn">Generate Clue List</button>
-  </section>
-
-</main>
-
 <script>
-  // Create 10 fixed question rows
   function createQuestionRow(index) {
     const row = document.createElement("div");
     row.className = "row";
@@ -128,13 +11,13 @@
     clue2.placeholder = `Q${index+1} Clue 2`;
     clue2.name = "clue2";
 
-    const answer = document.createElement("input");
-    answer.placeholder = `Q${index+1} Answer`;
-    answer.name = "answer";
+    const answers = document.createElement("input");
+    answers.placeholder = `Q${index+1} Answers (comma separated)`;
+    answers.name = "answers";
 
     row.appendChild(clue1);
     row.appendChild(clue2);
-    row.appendChild(answer);
+    row.appendChild(answers);
 
     return row;
   }
@@ -151,10 +34,11 @@
     return rows.map(row => {
       const clue1 = row.querySelector('input[name="clue1"]').value.trim();
       const clue2 = row.querySelector('input[name="clue2"]').value.trim();
-      const answer = row.querySelector('input[name="answer"]').value.trim();
+      const answersRaw = row.querySelector('input[name="answers"]').value.trim();
+
       return {
         clue: `${clue1} ${clue2}`.trim(),
-        answer: answer
+        answers: answersRaw ? answersRaw.split(",").map(a => a.trim()) : []
       };
     });
   }
@@ -200,14 +84,48 @@
     document.getElementById("clueListOutput").value = output;
   }
 
-  // Wire buttons
+  // Upload stays the same — uses jsonOutput
+  async function uploadJSON() {
+    const clientId = document.getElementById("clientIdInput").value.trim();
+    const token = document.getElementById("tokenInput").value.trim();
+    const jsonText = document.getElementById("jsonOutput").value;
+
+    if (!clientId || !token) {
+      alert("Please paste your Client ID and Access Token.");
+      return;
+    }
+
+    const metadata = {
+      name: `cluesontues_week${document.getElementById("weekInput").value}.json`,
+      mimeType: "application/json"
+    };
+
+    const form = new FormData();
+    form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+    form.append("file", new Blob([jsonText], { type: "application/json" }));
+
+    const res = await fetch(
+      "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: form
+      }
+    );
+
+    if (res.ok) {
+      alert("Uploaded successfully!");
+    } else {
+      alert("Upload failed. Check your token.");
+    }
+  }
+
   document.getElementById("generateJsonBtn").addEventListener("click", generateJSON);
   document.getElementById("downloadJsonBtn").addEventListener("click", downloadJSON);
   document.getElementById("generateClueListBtn").addEventListener("click", generateClueList);
+  document.getElementById("uploadJsonBtn").addEventListener("click", uploadJSON);
 
-  // Init
   initQuestions();
 </script>
-
-</body>
-</html>
