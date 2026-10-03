@@ -71,6 +71,10 @@
       background: #e7efff;
       color: #0b1b3b;
     }
+    .status {
+      margin-top: 8px;
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 
@@ -90,14 +94,6 @@
   </section>
 
   <section class="card">
-    <h2>Google Drive Tokens</h2>
-    <div class="row">
-      <input id="clientIdInput" type="text" placeholder="Google OAuth Client ID">
-      <input id="tokenInput" type="text" placeholder="Google OAuth Access Token">
-    </div>
-  </section>
-
-  <section class="card">
     <h2>10 Questions</h2>
     <div id="questionsContainer"></div>
   </section>
@@ -105,6 +101,7 @@
   <section class="card">
     <h2>JSON Output</h2>
     <textarea id="jsonOutput" readonly></textarea>
+    <div class="status" id="jsonStatus"></div>
     <button class="btn btn-primary" id="generateJsonBtn">Generate JSON</button>
     <button class="btn btn-secondary" id="downloadJsonBtn">Download JSON</button>
     <button class="btn btn-primary" id="uploadJsonBtn">Upload JSON to Drive</button>
@@ -119,6 +116,8 @@
 </main>
 
 <script>
+  const WEB_APP_URL = "PASTE_YOUR_WEB_APP_URL_HERE"; // from Apps Script deployment
+
   function createQuestionRow(index) {
     const row = document.createElement("div");
     row.className = "row";
@@ -167,6 +166,7 @@
     const week = document.getElementById("weekInput").value.trim();
     const theme = document.getElementById("themeInput").value.trim();
     const questions = getQuestions();
+    const status = document.getElementById("jsonStatus");
 
     const json = {
       week: Number(week),
@@ -176,16 +176,28 @@
 
     document.getElementById("jsonOutput").value =
       JSON.stringify(json, null, 2);
+
+    if (!week || !theme) {
+      status.textContent = "Warning: week or theme is empty.";
+    } else {
+      status.textContent = `Generated JSON for week ${week} with ${questions.length} questions.`;
+    }
   }
 
   function downloadJSON() {
     const text = document.getElementById("jsonOutput").value;
-    const blob = new Blob([text], { type: "application/json" });
+    if (!text.trim()) {
+      generateJSON();
+    }
+    const blob = new Blob([document.getElementById("jsonOutput").value], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
+    const week = document.getElementById("weekInput").value || "unknown";
     a.href = url;
-    a.download = `cluesontues_week${document.getElementById("weekInput").value}.json`;
+    a.download = `cluesontues_week${week}.json`;
+    document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
 
@@ -205,39 +217,30 @@
   }
 
   async function uploadJSON() {
-    const clientId = document.getElementById("clientIdInput").value.trim();
-    const token = document.getElementById("tokenInput").value.trim();
-    const jsonText = document.getElementById("jsonOutput").value;
+    const jsonText = document.getElementById("jsonOutput").value.trim();
+    const status = document.getElementById("jsonStatus");
 
-    if (!clientId || !token) {
-      alert("Please paste your Client ID and Access Token.");
-      return;
+    if (!jsonText) {
+      generateJSON();
     }
 
-    const metadata = {
-      name: `cluesontues_week${document.getElementById("weekInput").value}.json`,
-      mimeType: "application/json"
-    };
-
-    const form = new FormData();
-    form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
-    form.append("file", new Blob([jsonText], { type: "application/json" }));
-
-    const res = await fetch(
-      "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
-      {
+    try {
+      const res = await fetch(WEB_APP_URL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`
+          "Content-Type": "application/json"
         },
-        body: form
-      }
-    );
+        body: document.getElementById("jsonOutput").value
+      });
 
-    if (res.ok) {
-      alert("Uploaded successfully!");
-    } else {
-      alert("Upload failed. Check your token.");
+      const data = await res.json();
+      if (data.success) {
+        status.textContent = "Uploaded to Drive successfully.";
+      } else {
+        status.textContent = "Upload failed: " + (data.error || "Unknown error");
+      }
+    } catch (err) {
+      status.textContent = "Upload error: " + err.toString();
     }
   }
 
