@@ -21,11 +21,6 @@
       margin: 0;
       font-size: 1.4rem;
     }
-    header p {
-      margin: 4px 0 0;
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
     main {
       max-width: 960px;
       margin: 24px auto;
@@ -39,80 +34,18 @@
       margin-bottom: 18px;
       animation: fadeIn 0.4s ease-out;
     }
-    .card h2 {
-      margin-top: 0;
-      font-size: 1.1rem;
-    }
     .row {
       display: grid;
-      grid-template-columns: 1.2fr 1.2fr 1.2fr 0.8fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
       margin-bottom: 8px;
-      align-items: center;
     }
-    .row input {
+    input {
       width: 100%;
       padding: 6px 8px;
       border-radius: 6px;
       border: 1px solid #c7d4ff;
       font-size: 0.9rem;
-      transition: box-shadow 0.2s, border-color 0.2s;
-    }
-    .row input:focus {
-      outline: none;
-      border-color: #0b5fff;
-      box-shadow: 0 0 0 2px rgba(11,95,255,0.2);
-    }
-    .row button {
-      padding: 6px 8px;
-      border-radius: 6px;
-      border: none;
-      background: #ff4b4b;
-      color: white;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-    }
-    .row button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-      background: #e13a3a;
-    }
-    .btn-bar {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.9rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-    }
-    .btn-primary {
-      background: #0b5fff;
-      color: white;
-      box-shadow: 0 4px 12px rgba(11,95,255,0.35);
-    }
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(11,95,255,0.45);
-      background: #0847c0;
-    }
-    .btn-secondary {
-      background: #e7efff;
-      color: #0b1b3b;
-    }
-    .btn-secondary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-      background: #d5e3ff;
     }
     textarea {
       width: 100%;
@@ -120,20 +53,24 @@
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #c7d4ff;
-      font-size: 0.85rem;
       font-family: "JetBrains Mono", Consolas, monospace;
-      resize: vertical;
       background: #f9fbff;
     }
-    .status {
-      margin-top: 8px;
-      font-size: 0.85rem;
+    .btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-right: 10px;
     }
-    .status.ok {
-      color: #0b7a2f;
+    .btn-primary {
+      background: #0b5fff;
+      color: white;
     }
-    .status.err {
-      color: #b00020;
+    .btn-secondary {
+      background: #e7efff;
+      color: #0b1b3b;
     }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
@@ -141,161 +78,136 @@
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>CluesOnTues Admin</h1>
-    <p>Create and export your weekly quiz JSON.</p>
-  </header>
+<header>
+  <h1>CluesOnTues Admin</h1>
+</header>
 
-  <main>
-    <section class="card">
-      <h2>Questions</h2>
-      <div id="questionsContainer"></div>
-      <div class="btn-bar">
-        <button class="btn btn-secondary" id="addQuestionBtn">＋ Add question</button>
-      </div>
-    </section>
+<main>
 
-    <section class="card">
-      <h2>JSON preview</h2>
-      <textarea id="jsonOutput" readonly></textarea>
-      <div class="btn-bar">
-        <button class="btn btn-primary" id="generateJsonBtn">Generate JSON</button>
-        <button class="btn btn-secondary" id="downloadJsonBtn">Download JSON file</button>
-      </div>
-      <div id="jsonStatus" class="status"></div>
-    </section>
+  <section class="card">
+    <h2>Week & Theme</h2>
+    <div class="row">
+      <input id="weekInput" type="number" placeholder="Week number">
+      <input id="themeInput" type="text" placeholder="Theme">
+    </div>
+  </section>
 
-    <section class="card">
-      <h2>Upload to Google Drive (hook)</h2>
-      <p style="font-size:0.85rem;">
-        Once you have your <strong>OAuth Client ID</strong> and a target Drive folder,
-        you’ll plug them into the upload function below.
-      </p>
-      <div class="btn-bar">
-        <button class="btn btn-primary" id="uploadJsonBtn">Upload JSON to Drive (placeholder)</button>
-      </div>
-      <div id="uploadStatus" class="status"></div>
-    </section>
-  </main>
+  <section class="card">
+    <h2>10 Questions</h2>
+    <div id="questionsContainer"></div>
+  </section>
 
-  <script>
-    // --- Simple in-page state ---
-    let questionIndex = 0;
+  <section class="card">
+    <h2>JSON Output</h2>
+    <textarea id="jsonOutput" readonly></textarea>
+    <button class="btn btn-primary" id="generateJsonBtn">Generate JSON</button>
+    <button class="btn btn-secondary" id="downloadJsonBtn">Download JSON</button>
+  </section>
 
-    function createQuestionRow(index) {
-      const row = document.createElement("div");
-      row.className = "row";
-      row.dataset.index = index;
+  <section class="card">
+    <h2>Clue List Output</h2>
+    <textarea id="clueListOutput" readonly></textarea>
+    <button class="btn btn-primary" id="generateClueListBtn">Generate Clue List</button>
+  </section>
 
-      const clue1 = document.createElement("input");
-      clue1.placeholder = "Clue 1";
-      clue1.name = "clue1";
+</main>
 
-      const clue2 = document.createElement("input");
-      clue2.placeholder = "Clue 2";
-      clue2.name = "clue2";
+<script>
+  // Create 10 fixed question rows
+  function createQuestionRow(index) {
+    const row = document.createElement("div");
+    row.className = "row";
 
-      const answer = document.createElement("input");
-      answer.placeholder = "Answer";
-      answer.name = "answer";
+    const clue1 = document.createElement("input");
+    clue1.placeholder = `Q${index+1} Clue 1`;
+    clue1.name = "clue1";
 
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.textContent = "Remove";
-      removeBtn.addEventListener("click", () => {
-        row.remove();
-      });
+    const clue2 = document.createElement("input");
+    clue2.placeholder = `Q${index+1} Clue 2`;
+    clue2.name = "clue2";
 
-      row.appendChild(clue1);
-      row.appendChild(clue2);
-      row.appendChild(answer);
-      row.appendChild(removeBtn);
+    const answer = document.createElement("input");
+    answer.placeholder = `Q${index+1} Answer`;
+    answer.name = "answer";
 
-      return row;
+    row.appendChild(clue1);
+    row.appendChild(clue2);
+    row.appendChild(answer);
+
+    return row;
+  }
+
+  function initQuestions() {
+    const container = document.getElementById("questionsContainer");
+    for (let i = 0; i < 10; i++) {
+      container.appendChild(createQuestionRow(i));
     }
+  }
 
-    function getQuestionsFromUI() {
-      const container = document.getElementById("questionsContainer");
-      const rows = Array.from(container.querySelectorAll(".row"));
-      return rows.map(row => {
-        const clue1 = row.querySelector('input[name="clue1"]').value.trim();
-        const clue2 = row.querySelector('input[name="clue2"]').value.trim();
-        const answer = row.querySelector('input[name="answer"]').value.trim();
-        return {
-          clue: `${clue1} ${clue2}`.trim(),
-          answer: answer
-        };
-      }).filter(q => q.clue && q.answer);
-    }
+  function getQuestions() {
+    const rows = Array.from(document.querySelectorAll("#questionsContainer .row"));
+    return rows.map(row => {
+      const clue1 = row.querySelector('input[name="clue1"]').value.trim();
+      const clue2 = row.querySelector('input[name="clue2"]').value.trim();
+      const answer = row.querySelector('input[name="answer"]').value.trim();
+      return {
+        clue: `${clue1} ${clue2}`.trim(),
+        answer: answer
+      };
+    });
+  }
 
-    function generateJson() {
-      const questions = getQuestionsFromUI();
-      const payload = { questions };
-      const json = JSON.stringify(payload, null, 2);
-      const output = document.getElementById("jsonOutput");
-      const status = document.getElementById("jsonStatus");
+  function generateJSON() {
+    const week = document.getElementById("weekInput").value.trim();
+    const theme = document.getElementById("themeInput").value.trim();
+    const questions = getQuestions();
 
-      output.value = json;
+    const json = {
+      week: Number(week),
+      theme: theme,
+      questions: questions
+    };
 
-      if (questions.length === 0) {
-        status.textContent = "No valid questions found. Add at least one.";
-        status.className = "status err";
-      } else {
-        status.textContent = `Generated JSON for ${questions.length} question(s).`;
-        status.className = "status ok";
-      }
-    }
+    document.getElementById("jsonOutput").value =
+      JSON.stringify(json, null, 2);
+  }
 
-    function downloadJson() {
-      const text = document.getElementById("jsonOutput").value;
-      if (!text.trim()) {
-        generateJson();
-      }
-      const blob = new Blob([document.getElementById("jsonOutput").value], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "cluesontues.json";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+  function downloadJSON() {
+    const text = document.getElementById("jsonOutput").value;
+    const blob = new Blob([text], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `cluesontues_week${document.getElementById("weekInput").value}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
-    // --- Placeholder for Google Drive upload ---
-    async function uploadJsonToDrivePlaceholder() {
-      const status = document.getElementById("uploadStatus");
-      const jsonText = document.getElementById("jsonOutput").value.trim();
+  function generateClueList() {
+    const week = document.getElementById("weekInput").value.trim();
+    const theme = document.getElementById("themeInput").value.trim();
+    const questions = getQuestions();
 
-      if (!jsonText) {
-        generateJson();
-      }
+    let output = `CluesOnTues Week ${week}\n`;
+    output += `Today's Theme: ${theme}\n\n`;
 
-      // TODO:
-      // 1. Add Google Sign-In / OAuth using your Client ID.
-      // 2. Get an access token.
-      // 3. Use fetch() to POST the JSON to:
-      //    https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart
-      //    with the correct folder ID and metadata.
-
-      status.textContent = "Upload placeholder: JSON is ready, but Drive OAuth is not wired yet.";
-      status.className = "status err";
-    }
-
-    // --- Wire up buttons ---
-    document.getElementById("addQuestionBtn").addEventListener("click", () => {
-      const container = document.getElementById("questionsContainer");
-      container.appendChild(createQuestionRow(questionIndex++));
+    questions.forEach((q, i) => {
+      output += `${i+1}. ${q.clue}\n`;
     });
 
-    document.getElementById("generateJsonBtn").addEventListener("click", generateJson);
-    document.getElementById("downloadJsonBtn").addEventListener("click", downloadJson);
-    document.getElementById("uploadJsonBtn").addEventListener("click", uploadJsonToDrivePlaceholder);
+    document.getElementById("clueListOutput").value = output;
+  }
 
-    // Start with one empty row
-    document.getElementById("questionsContainer").appendChild(createQuestionRow(questionIndex++));
-  </script>
+  // Wire buttons
+  document.getElementById("generateJsonBtn").addEventListener("click", generateJSON);
+  document.getElementById("downloadJsonBtn").addEventListener("click", downloadJSON);
+  document.getElementById("generateClueListBtn").addEventListener("click", generateClueList);
+
+  // Init
+  initQuestions();
+</script>
+
 </body>
 </html>
-
