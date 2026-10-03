@@ -1,1 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CluesOnTues Admin</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f8ff;
+      margin: 0;
+      padding: 0;
+      color: #0b1b3b;
+    }
+    header {
+      background: linear-gradient(135deg, #0b5fff, #3a8dff);
+      color: white;
+      padding: 16px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+    header p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    main {
+      max-width: 960px;
+      margin: 24px auto;
+      padding: 0 16px 32px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      animation: fadeIn 0.4s ease-out;
+    }
+    .card h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 1.2fr 0.8fr;
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+    .row input {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #c7d4ff;
+      font-size: 0.9rem;
+      transition: box-shadow 0.2s, border-color 0.2s;
+    }
+    .row input:focus {
+      outline: none;
+      border-color: #0b5fff;
+      box-shadow: 0 0 0 2px rgba(11,95,255,0.2);
+    }
+    .row button {
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: none;
+      background: #ff4b4b;
+      color: white;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .row button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      background: #e13a3a;
+    }
+    .btn-bar {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    }
+    .btn-primary {
+      background: #0b5fff;
+      color: white;
+      box-shadow: 0 4px 12px rgba(11,95,255,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(11,95,255,0.45);
+      background: #0847c0;
+    }
+    .btn-secondary {
+      background: #e7efff;
+      color: #0b1b3b;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      background: #d5e3ff;
+    }
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #c7d4ff;
+      font-size: 0.85rem;
+      font-family: "JetBrains Mono", Consolas, monospace;
+      resize: vertical;
+      background: #f9fbff;
+    }
+    .status {
+      margin-top: 8px;
+      font-size: 0.85rem;
+    }
+    .status.ok {
+      color: #0b7a2f;
+    }
+    .status.err {
+      color: #b00020;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>CluesOnTues Admin</h1>
+    <p>Create and export your weekly quiz JSON.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Questions</h2>
+      <div id="questionsContainer"></div>
+      <div class="btn-bar">
+        <button class="btn btn-secondary" id="addQuestionBtn">＋ Add question</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>JSON preview</h2>
+      <textarea id="jsonOutput" readonly></textarea>
+      <div class="btn-bar">
+        <button class="btn btn-primary" id="generateJsonBtn">Generate JSON</button>
+        <button class="btn btn-secondary" id="downloadJsonBtn">Download JSON file</button>
+      </div>
+      <div id="jsonStatus" class="status"></div>
+    </section>
+
+    <section class="card">
+      <h2>Upload to Google Drive (hook)</h2>
+      <p style="font-size:0.85rem;">
+        Once you have your <strong>OAuth Client ID</strong> and a target Drive folder,
+        you’ll plug them into the upload function below.
+      </p>
+      <div class="btn-bar">
+        <button class="btn btn-primary" id="uploadJsonBtn">Upload JSON to Drive (placeholder)</button>
+      </div>
+      <div id="uploadStatus" class="status"></div>
+    </section>
+  </main>
+
+  <script>
+    // --- Simple in-page state ---
+    let questionIndex = 0;
+
+    function createQuestionRow(index) {
+      const row = document.createElement("div");
+      row.className = "row";
+      row.dataset.index = index;
+
+      const clue1 = document.createElement("input");
+      clue1.placeholder = "Clue 1";
+      clue1.name = "clue1";
+
+      const clue2 = document.createElement("input");
+      clue2.placeholder = "Clue 2";
+      clue2.name = "clue2";
+
+      const answer = document.createElement("input");
+      answer.placeholder = "Answer";
+      answer.name = "answer";
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.textContent = "Remove";
+      removeBtn.addEventListener("click", () => {
+        row.remove();
+      });
+
+      row.appendChild(clue1);
+      row.appendChild(clue2);
+      row.appendChild(answer);
+      row.appendChild(removeBtn);
+
+      return row;
+    }
+
+    function getQuestionsFromUI() {
+      const container = document.getElementById("questionsContainer");
+      const rows = Array.from(container.querySelectorAll(".row"));
+      return rows.map(row => {
+        const clue1 = row.querySelector('input[name="clue1"]').value.trim();
+        const clue2 = row.querySelector('input[name="clue2"]').value.trim();
+        const answer = row.querySelector('input[name="answer"]').value.trim();
+        return {
+          clue: `${clue1} ${clue2}`.trim(),
+          answer: answer
+        };
+      }).filter(q => q.clue && q.answer);
+    }
+
+    function generateJson() {
+      const questions = getQuestionsFromUI();
+      const payload = { questions };
+      const json = JSON.stringify(payload, null, 2);
+      const output = document.getElementById("jsonOutput");
+      const status = document.getElementById("jsonStatus");
+
+      output.value = json;
+
+      if (questions.length === 0) {
+        status.textContent = "No valid questions found. Add at least one.";
+        status.className = "status err";
+      } else {
+        status.textContent = `Generated JSON for ${questions.length} question(s).`;
+        status.className = "status ok";
+      }
+    }
+
+    function downloadJson() {
+      const text = document.getElementById("jsonOutput").value;
+      if (!text.trim()) {
+        generateJson();
+      }
+      const blob = new Blob([document.getElementById("jsonOutput").value], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "cluesontues.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // --- Placeholder for Google Drive upload ---
+    async function uploadJsonToDrivePlaceholder() {
+      const status = document.getElementById("uploadStatus");
+      const jsonText = document.getElementById("jsonOutput").value.trim();
+
+      if (!jsonText) {
+        generateJson();
+      }
+
+      // TODO:
+      // 1. Add Google Sign-In / OAuth using your Client ID.
+      // 2. Get an access token.
+      // 3. Use fetch() to POST the JSON to:
+      //    https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart
+      //    with the correct folder ID and metadata.
+
+      status.textContent = "Upload placeholder: JSON is ready, but Drive OAuth is not wired yet.";
+      status.className = "status err";
+    }
+
+    // --- Wire up buttons ---
+    document.getElementById("addQuestionBtn").addEventListener("click", () => {
+      const container = document.getElementById("questionsContainer");
+      container.appendChild(createQuestionRow(questionIndex++));
+    });
+
+    document.getElementById("generateJsonBtn").addEventListener("click", generateJson);
+    document.getElementById("downloadJsonBtn").addEventListener("click", downloadJson);
+    document.getElementById("uploadJsonBtn").addEventListener("click", uploadJsonToDrivePlaceholder);
+
+    // Start with one empty row
+    document.getElementById("questionsContainer").appendChild(createQuestionRow(questionIndex++));
+  </script>
+</body>
+</html>
 
