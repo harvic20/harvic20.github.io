@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CluesOnTues Admin 1.01</title>
+  <title>CluesOnTues Admin</title>
   <style>
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, sans-serif;
       background: #f5f8ff;
       margin: 0;
       padding: 0;
@@ -16,10 +16,6 @@
       color: white;
       padding: 16px 24px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.4rem;
     }
     main {
       max-width: 960px;
@@ -44,7 +40,6 @@
       padding: 6px 8px;
       border-radius: 6px;
       border: 1px solid #c7d4ff;
-      font-size: 0.9rem;
     }
     textarea {
       width: 100%;
@@ -52,14 +47,13 @@
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #c7d4ff;
-      font-family: "JetBrains Mono", Consolas, monospace;
+      font-family: monospace;
       background: #f9fbff;
     }
     .btn {
       padding: 8px 14px;
       border-radius: 999px;
       border: none;
-      font-size: 0.9rem;
       cursor: pointer;
       margin-right: 10px;
     }
@@ -116,7 +110,8 @@
 </main>
 
 <script>
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbycKCU4x4sBBdxIjhCYBqAtZFhC6IxjwZMVTHeMYMGJQ6cJmzZ_XoOSP0amfIi5XafJUw/exec"; // from Apps Script deployment
+  // ⭐ Paste your Apps Script Web App URL here
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzXj97RoqM3O0N2QmJv-AbWuYtmOIk0P-ukoW3Zald-/dev";
 
   function createQuestionRow(index) {
     const row = document.createElement("div");
@@ -177,27 +172,20 @@
     document.getElementById("jsonOutput").value =
       JSON.stringify(json, null, 2);
 
-    if (!week || !theme) {
-      status.textContent = "Warning: week or theme is empty.";
-    } else {
-      status.textContent = `Generated JSON for week ${week} with ${questions.length} questions.`;
-    }
+    status.textContent = `Generated JSON for week ${week}.`;
   }
 
   function downloadJSON() {
     const text = document.getElementById("jsonOutput").value;
-    if (!text.trim()) {
-      generateJSON();
-    }
+    if (!text.trim()) generateJSON();
+
     const blob = new Blob([document.getElementById("jsonOutput").value], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     const week = document.getElementById("weekInput").value || "unknown";
     a.href = url;
     a.download = `cluesontues_week${week}.json`;
-    document.body.appendChild(a);
     a.click();
-    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
 
@@ -217,19 +205,15 @@
   }
 
   async function uploadJSON() {
-    const jsonText = document.getElementById("jsonOutput").value.trim();
     const status = document.getElementById("jsonStatus");
+    const jsonText = document.getElementById("jsonOutput").value.trim();
 
-    if (!jsonText) {
-      generateJSON();
-    }
+    if (!jsonText) generateJSON();
 
     try {
       const res = await fetch(WEB_APP_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: document.getElementById("jsonOutput").value
       });
 
@@ -237,7 +221,7 @@
       if (data.success) {
         status.textContent = "Uploaded to Drive successfully.";
       } else {
-        status.textContent = "Upload failed: " + (data.error || "Unknown error");
+        status.textContent = "Upload failed: " + data.error;
       }
     } catch (err) {
       status.textContent = "Upload error: " + err.toString();
