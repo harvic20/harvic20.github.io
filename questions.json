@@ -1,46 +1,46 @@
-{
-  "week": 6,
-  "theme": "Sports That I Have Done At Least Once",
-  "questions": [
-    {
-      "clue": "Tony Stark",
-      "answers": ["ironman", "triathlon", "tri"]
-    },
-    {
-      "clue": "Forest Gump",
-     "answers": ["running", "run"]
-    },
-    {
-      "clue": "Diesel Pedal",
-      "answers": ["motocross", "motobike"]
-    },
-    {
-      "clue": "Snow Downhill",
-      "answers": ["skiing"]
-    },
-    {
-      "clue": "Slam America",
-      "answers": ["basketball"]
-    },
-    {
-      "clue": "Back Breast",
-      "answers": ["Swimming", "Swim"]
-    },
-    {
-      "clue": "Butternut Pumpkin",
-      "answers": ["squash"]
-    },
-    {
-      "clue": "Board Sailing",
-      "answers": ["windsurfing"]
-    },
-    {
-      "clue": "Sandy Gumshield",
-       "answers": ["Rugby"]
-    },
-    {
-      "clue": "Summer Stumps",
-       "answers": ["cricket"]
-    }
-  ]
-}
+[
+  {
+    "week": 1,
+    "theme": "1"
+  },
+  {
+    "question": "1 1",
+    "answer": "1"
+  },
+  {
+    "question": "1 1",
+    "answer": "11"
+  },
+  {
+    "question": "",
+    "answer": ""
+  },
+  {
+    "question": "",
+    "answer": ""
+  },
+  {
+    "question": "",
+    "answer": ""
+  },
+  {
+    "question": "",
+    "answer": ""
+  },
+  {
+    "question": "",
+    "answer": ""
+  },
+  {
+    "question": "",
+    "answer": ""
+  },
+  {
+    "question": "",
+    "answer": ""
+  },
+  {
+    "question": "",
+    "answer": ""
+  }
+]
