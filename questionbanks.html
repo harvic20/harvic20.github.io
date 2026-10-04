@@ -54,7 +54,7 @@
     <h1>CluesOnTues Admin</h1>
 
     <label>Week Number:</label>
-    <input id="week" type="number" placeholder="e.g. 42">
+    <input id="week" type="number" placeholder="e.g. 13">
 
     <label>Theme:</label>
     <input id="theme" type="text" placeholder="e.g. Famous Landmarks">
@@ -92,7 +92,7 @@
                 return;
             }
 
-            // Build JSON object
+            // Build clues array
             const clues = [];
             for (let i = 1; i <= 10; i++) {
                 const q = document.getElementById(`q${i}`).value.trim();
@@ -106,11 +106,14 @@
                 clues.push({ question: q, answer: a });
             }
 
-            const jsonData = {
-                week: Number(week),
-                theme: theme,
-                clues: clues
-            };
+            // ⭐ Correct JSON format (array-based)
+            const jsonData = [
+                {
+                    week: Number(week),
+                    theme: theme
+                },
+                ...clues
+            ];
 
             try {
                 const response = await fetch(
