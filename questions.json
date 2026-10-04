@@ -1,46 +1,66 @@
-[
-  {
-    "week": 11,
-    "theme": "q"
-  },
-  {
-    "question": "q q",
-    "answer": "q"
-  },
-  {
-    "question": "q q",
-    "answer": "q"
-  },
-  {
-    "question": "q q",
-    "answer": "qq"
-  },
-  {
-    "question": "q q",
-    "answer": "q"
-  },
-  {
-    "question": "qq q",
-    "answer": "q"
-  },
-  {
-    "question": "q qq",
-    "answer": "q"
-  },
-  {
-    "question": "q q",
-    "answer": "q"
-  },
-  {
-    "question": "q q",
-    "answer": "q"
-  },
-  {
-    "question": "q q",
-    "answer": "q"
-  },
-  {
-    "question": "q qq",
-    "answer": "q"
-  }
-]
+{
+  "week": 1,
+  "theme": "hmmmmmm",
+  "questions": [
+    {
+      "clue": "please please",
+      "answers": [
+        "work"
+      ]
+    },
+    {
+      "clue": "for me",
+      "answers": [
+        "I"
+      ]
+    },
+    {
+      "clue": "am so",
+      "answers": [
+        "fed"
+      ]
+    },
+    {
+      "clue": "up of",
+      "answers": [
+        "this"
+      ]
+    },
+    {
+      "clue": "not working",
+      "answers": [
+        "ahhh"
+      ]
+    },
+    {
+      "clue": "h hh",
+      "answers": [
+        "h"
+      ]
+    },
+    {
+      "clue": "h h",
+      "answers": [
+        "h"
+      ]
+    },
+    {
+      "clue": "h h",
+      "answers": [
+        "h"
+      ]
+    },
+    {
+      "clue": "h h",
+      "answers": [
+        "h"
+      ]
+    },
+    {
+      "clue": "h h",
+      "answers": [
+        "h"
+      ]
+    }
+  ]
+}
