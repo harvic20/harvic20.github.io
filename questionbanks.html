@@ -1,143 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>CluesOnTues Admin2</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        .row {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-        }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-        }
-
-        button {
-            padding: 12px 20px;
-            margin-top: 20px;
-            cursor: pointer;
-            width: 100%;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        #status {
-            margin-top: 20px;
-            font-size: 18px;
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>CluesOnTues Admin</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f8ff;
+      margin: 0;
+      padding: 0;
+      color: #0b1b3b;
+    }
+    header {
+      background: linear-gradient(135deg, #0b5fff, #3a8dff);
+      color: white;
+      padding: 16px 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+    main {
+      max-width: 960px;
+      margin: 24px auto;
+      padding: 0 16px 32px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      padding: 18px 20px;
+      margin-bottom: 18px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    input {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #c7d4ff;
+      font-size: 0.9rem;
+    }
+    textarea {
+      width: 100%;
+      min-height: 160px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #c7d4ff;
+      font-family: "JetBrains Mono", Consolas, monospace;
+      background: #f9fbff;
+    }
+    .btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .btn-primary {
+      background: #0b5fff;
+      color: white;
+    }
+    .btn-secondary {
+      background: #e7efff;
+      color: #0b1b3b;
+    }
+  </style>
 </head>
 
 <body>
+<header>
+  <h1>CluesOnTues Admin</h1>
+</header>
 
-    <h1>CluesOnTues Admin</h1>
+<main>
 
-    <label>Week Number:</label>
-    <input id="week" type="number" placeholder="e.g. 13">
+  <section class="card">
+    <h2>Week & Theme</h2>
+    <div class="row">
+      <input id="weekInput" type="number" placeholder="Week number">
+      <input id="themeInput" type="text" placeholder="Theme">
+    </div>
+  </section>
 
-    <label>Theme:</label>
-    <input id="theme" type="text" placeholder="e.g. Famous Landmarks">
+  <section class="card">
+    <h2>Google Drive Tokens</h2>
+    <div class="row">
+      <input id="clientIdInput" type="text" placeholder="Google OAuth Client ID">
+      <input id="tokenInput" type="text" placeholder="Google OAuth Access Token">
+    </div>
+  </section>
 
-    <h2>Questions</h2>
+  <section class="card">
+    <h2>10 Questions</h2>
+    <div id="questionsContainer"></div>
+  </section>
 
-    <div id="questions"></div>
+  <section class="card">
+    <h2>JSON Output</h2>
+    <textarea id="jsonOutput" readonly></textarea>
+    <button class="btn btn-primary" id="generateJsonBtn">Generate JSON</button>
+    <button class="btn btn-secondary" id="downloadJsonBtn">Download JSON</button>
+    <button class="btn btn-primary" id="uploadJsonBtn">Upload JSON to Drive</button>
+  </section>
 
-    <button onclick="uploadJSON()">Upload to Cloudflare</button>
+  <section class="card">
+    <h2>Clue List Output</h2>
+    <textarea id="clueListOutput" readonly></textarea>
+    <button class="btn btn-primary" id="generateClueListBtn">Generate Clue List</button>
+  </section>
 
-    <div id="status"></div>
+</main>
 
-    <script>
-        // Build 10 question rows
-        const container = document.getElementById("questions");
-        for (let i = 1; i <= 10; i++) {
-            container.innerHTML += `
-                <div class="row">
-                    <strong>Question ${i}</strong>
-                    <input id="q${i}" placeholder="Question text">
-                    <input id="a${i}" placeholder="Answer">
-                </div>
-            `;
-        }
+<script>
+  function createQuestionRow(index) {
+    const row = document.createElement("div");
+    row.className = "row";
 
-        async function uploadJSON() {
-            const status = document.getElementById("status");
-            status.textContent = "Uploading...";
+    const clue1 = document.createElement("input");
+    clue1.placeholder = `Q${index+1} Clue 1`;
+    clue1.name = "clue1";
 
-            const week = document.getElementById("week").value.trim();
-            const theme = document.getElementById("theme").value.trim();
+    const clue2 = document.createElement("input");
+    clue2.placeholder = `Q${index+1} Clue 2`;
+    clue2.name = "clue2";
 
-            if (!week || !theme) {
-                status.textContent = "❌ Week and theme are required.";
-                return;
-            }
+    const answers = document.createElement("input");
+    answers.placeholder = `Q${index+1} Answers (comma separated)`;
+    answers.name = "answers";
 
-            // Build clues array
-            const clues = [];
-            for (let i = 1; i <= 10; i++) {
-                const q = document.getElementById(`q${i}`).value.trim();
-                const a = document.getElementById(`a${i}`).value.trim();
+    row.appendChild(clue1);
+    row.appendChild(clue2);
+    row.appendChild(answers);
 
-                if (!q || !a) {
-                    status.textContent = `❌ Question ${i} is missing text or answer.`;
-                    return;
-                }
+    return row;
+  }
 
-                clues.push({ question: q, answer: a });
-            }
+  function initQuestions() {
+    const container = document.getElementById("questionsContainer");
+    for (let i = 0; i < 10; i++) {
+      container.append.appendChild(createQuestionRow(i));
+    }
+  }
 
-            // ⭐ Correct JSON format (array-based)
-            const jsonData = [
-                {
-                    week: Number(week),
-                    theme: theme
-                },
-                ...clues
-            ];
+  function getQuestions() {
+    const rows = Array.from(document.querySelectorAll("#questionsContainer .row"));
+    return rows.map(row => {
+      const clue1 = row.querySelector('input[name="clue1"]').value.trim();
+      const clue2 = row.querySelector('input[name="clue2"]').value.trim();
+      const answersRaw = row.querySelector('input[name="answers"]').value.trim();
 
-            try {
-                const response = await fetch(
-                    "https://tight-scene-ed56.cluesontues.workers.dev/",
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(jsonData)
-                    }
-                );
+      return {
+        clue: `${clue1} ${clue2}`.trim(),
+        answers: answersRaw ? answersRaw.split(",").map(a => a.trim()) : []
+      };
+    });
+  }
 
-                const result = await response.json();
+  function generateJSON() {
+    const week = document.getElementById("weekInput").value.trim();
+    const theme = document.getElementById("themeInput").value.trim();
+    const questions = getQuestions();
 
-                if (response.ok) {
-                    status.textContent = "✅ Upload successful!";
-                } else {
-                    status.textContent = "❌ Upload failed: " + (result.message || "Unknown error");
-                }
+    const json = {
+      week: Number(week),
+      theme: theme,
+      questions: questions
+    };
 
-            } catch (err) {
-                status.textContent = "❌ Error: " + err.message;
-            }
-        }
-    </script>
+    document.getElementById("jsonOutput").value =
+      JSON.stringify(json, null, 2);
+  }
+
+  function downloadJSON() {
+    const text = document.getElementById("jsonOutput").value;
+    const blob = new Blob([text], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `cluesontues_week${document.getElementById("weekInput").value}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function generateClueList() {
+    const week = document.getElementById("weekInput").value.trim();
+    const theme = document.getElementById("themeInput").value.trim();
+    const questions = getQuestions();
+
+    let output = `CluesOnTues Week ${week}\n`;
+    output += `Today's Theme: ${theme}\n\n`;
+
+    questions.forEach((q, i) => {
+      output += `${i+1}. ${q.clue}\n`;
+    });
+
+    document.getElementById("clueListOutput").value = output;
+  }
+
+  async function uploadJSON() {
+    const clientId = document.getElementById("clientIdInput").value.trim();
+    const token = document.getElementById("tokenInput").value.trim();
+    const jsonText = document.getElementById("jsonOutput").value;
+
+    if (!clientId || !token) {
+      alert("Please paste your Client ID and Access Token.");
+      return;
+    }
+
+    const metadata = {
+      name: `cluesontues_week${document.getElementById("weekInput").value}.json`,
+      mimeType: "application/json"
+    };
+
+    const form = new FormData();
+    form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+    form.append("file", new Blob([jsonText], { type: "application/json" }));
+
+    const res = await fetch(
+      "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: form
+      }
+    );
+
+    if (res.ok) {
+      alert("Uploaded successfully!");
+    } else {
+      alert("Upload failed. Check your token.");
+    }
+  }
+
+  document.getElementById("generateJsonBtn").addEventListener("click", generateJSON);
+  document.getElementById("downloadJsonBtn").addEventListener("click", downloadJSON);
+  document.getElementById("generateClueListBtn").addEventListener("click", generateClueList);
+  document.getElementById("uploadJsonBtn").addEventListener("click", uploadJSON);
+
+  initQuestions();
+</script>
 
 </body>
 </html>
