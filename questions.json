@@ -1,65 +1,67 @@
 {
   "week": 1,
-  "theme": "hmmmmmm",
+  "theme": "Test",
   "questions": [
     {
-      "clue": "please please",
+      "clue": "test test",
       "answers": [
-        "work"
+        "test",
+        "2",
+        "1"
       ]
     },
     {
-      "clue": "for me",
+      "clue": "test test",
       "answers": [
-        "I"
+        "test"
       ]
     },
     {
-      "clue": "am so",
+      "clue": "test test",
       "answers": [
-        "fed"
+        "test"
       ]
     },
     {
-      "clue": "up of",
+      "clue": "test test",
       "answers": [
-        "this"
+        "test"
       ]
     },
     {
-      "clue": "not working",
+      "clue": "test test",
       "answers": [
-        "ahhh"
+        "test"
       ]
     },
     {
-      "clue": "h hh",
+      "clue": "test test",
       "answers": [
-        "h"
+        "test"
       ]
     },
     {
-      "clue": "h h",
+      "clue": "test test",
       "answers": [
-        "h"
+        "test"
       ]
     },
     {
-      "clue": "h h",
+      "clue": "test test",
       "answers": [
-        "h"
+        "test"
       ]
     },
     {
-      "clue": "h h",
+      "clue": "test test",
       "answers": [
-        "h"
+        "test"
       ]
     },
     {
-      "clue": "h h",
+      "clue": "test test",
       "answers": [
-        "h"
+        "test"
       ]
     }
   ]
