@@ -116,15 +116,15 @@
     row.className = "row";
 
     const clue1 = document.createElement("input");
-    clue1.placeholder = `Q${index+1} Clue 1`;
+    clue1.placeholder = `Q${index + 1} Clue 1`;
     clue1.name = "clue1";
 
     const clue2 = document.createElement("input");
-    clue2.placeholder = `Q${index+1} Clue 2`;
+    clue2.placeholder = `Q${index + 1} Clue 2`;
     clue2.name = "clue2";
 
     const answers = document.createElement("input");
-    answers.placeholder = `Q${index+1} Answers (comma separated)`;
+    answers.placeholder = `Q${index + 1} Answers (comma separated)`;
     answers.name = "answers";
 
     row.appendChild(clue1);
@@ -150,7 +150,7 @@
 
       return {
         clue: `${clue1} ${clue2}`.trim(),
-        answer: answersRaw.split(",")[0]?.trim() || ""
+        answers: answersRaw ? answersRaw.split(",").map(a => a.trim()) : []
       };
     });
   }
@@ -160,17 +160,14 @@
     const theme = document.getElementById("themeInput").value.trim();
     const questions = getQuestions();
 
-    // ⭐ Correct JSON format (array-based)
-    const json = [
-      { week: Number(week), theme: theme },
-      ...questions.map(q => ({
-        question: q.clue,
-        answer: q.answer
-      }))
-    ];
+    // ⭐ Correct JSON format (object with questions array)
+    const json = {
+      week: Number(week),
+      theme: theme,
+      questions: questions
+    };
 
-    document.getElementById("jsonOutput").value =
-      JSON.stringify(json, null, 2);
+    document.getElementById("jsonOutput").value = JSON.stringify(json, null, 2);
   }
 
   function downloadJSON() {
@@ -193,7 +190,7 @@
     output += `Today's Theme: ${theme}\n\n`;
 
     questions.forEach((q, i) => {
-      output += `${i+1}. ${q.clue}\n`;
+      output += `${i + 1}. ${q.clue}\n`;
     });
 
     document.getElementById("clueListOutput").value = output;
@@ -224,7 +221,6 @@
       } else {
         alert("Upload failed: " + (result.message || "Unknown error"));
       }
-
     } catch (err) {
       alert("Error: " + err.message);
     }
