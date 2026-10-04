@@ -1,46 +1,68 @@
 {
-  "week": 6,
-  "theme": "Sports That I Have Done At Least Once",
+  "week": 0,
+  "theme": "",
   "questions": [
     {
-      "clue": "Tony Stark",
-      "answers": ["ironman", "triathlon", "tri"]
+      "clue": "zara craig",
+      "answers": [
+        "the",
+        "best",
+        "couple"
+      ]
     },
     {
-      "clue": "Forest Gump",
-     "answers": ["running", "run"]
+      "clue": "1 1",
+      "answers": [
+        "1"
+      ]
     },
     {
-      "clue": "Diesel Pedal",
-      "answers": ["motocross", "motobike"]
+      "clue": "1 1",
+      "answers": [
+        "1"
+      ]
     },
     {
-      "clue": "Snow Downhill",
-      "answers": ["skiing"]
+      "clue": "1 1",
+      "answers": [
+        "1"
+      ]
     },
     {
-      "clue": "Slam America",
-      "answers": ["basketball"]
+      "clue": "1 1",
+      "answers": [
+        "1"
+      ]
     },
     {
-      "clue": "Back Breast",
-      "answers": ["Swimming", "Swim"]
+      "clue": "1 1",
+      "answers": [
+        "1"
+      ]
     },
     {
-      "clue": "Butternut Pumpkin",
-      "answers": ["squash"]
+      "clue": "1 1",
+      "answers": [
+        "1"
+      ]
     },
     {
-      "clue": "Board Sailing",
-      "answers": ["windsurfing"]
+      "clue": "1 1",
+      "answers": [
+        "1"
+      ]
     },
     {
-      "clue": "Sandy Gumshield",
-       "answers": ["Rugby"]
+      "clue": "1 1",
+      "answers": [
+        "1"
+      ]
     },
     {
-      "clue": "Summer Stumps",
-       "answers": ["cricket"]
+      "clue": "1 1",
+      "answers": [
+        "1"
+      ]
     }
   ]
 }
