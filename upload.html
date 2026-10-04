@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Upload</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            text-align: center;
+        }
+
+        input, button {
+            margin: 10px;
+            padding: 10px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        #status {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Upload Questions</h1>
+
+    <input
+        type="file"
+        id="jsonFile"
+        accept=".json"
+    >
+
+    <br>
+
+    <button onclick="uploadJSON()">
+        Upload to GitHub
+    </button>
+
+    <div id="status"></div>
+
+    <script>
+
+        async function uploadJSON() {
+
+            const fileInput = document.getElementById("jsonFile");
+            const status = document.getElementById("status");
+
+            if (!fileInput.files.length) {
+                status.textContent = "Please select a JSON file.";
+                return;
+            }
+
+            const file = fileInput.files[0];
+
+            if (!file.name.endsWith(".json")) {
+                status.textContent = "Please select a JSON file.";
+                return;
+            }
+
+            status.textContent = "Uploading...";
+
+            try {
+
+                const json = await file.text();
+
+                // Check the JSON is valid before uploading
+                JSON.parse(json);
+
+                const response = await fetch(
+                    "YOUR-CLOUDFLARE-WORKER-URL",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: json
+                    }
+                );
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    status.textContent =
+                        "✅ Questions uploaded successfully!";
+                } else {
+                    status.textContent =
+                        "❌ Upload failed: " +
+                        (result.message || "Unknown error");
+                }
+
+            } catch (error) {
+
+                status.textContent =
+                    "❌ Error: " + error.message;
+
+            }
+        }
+
+    </script>
+
+</body>
+</html>
