@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>CluesOnTues Admin</title>
+  <title>CluesOnTues Admin2</title>
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -150,7 +150,7 @@
 
       return {
         clue: `${clue1} ${clue2}`.trim(),
-        answers: answersRaw ? answersRaw.split(",").map(a => a.trim()) : []
+        answer: answersRaw.split(",")[0]?.trim() || ""
       };
     });
   }
@@ -165,7 +165,7 @@
       { week: Number(week), theme: theme },
       ...questions.map(q => ({
         question: q.clue,
-        answer: q.answers[0] || ""
+        answer: q.answer
       }))
     ];
 
