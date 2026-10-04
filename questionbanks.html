@@ -1,21 +1,140 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CluesOnTues Admin</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .row {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        #status {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+
 <body>
- <title>TEST003</title>
-<button id="btn">Send Test POST</button>
 
-<script>
-const URL = "https://script.google.com/macros/s/AKfycbyASWfW6ml4iR51TTinnzmiYppshbF8-Bkuq5heSe_sTarQndCXOnufbZcmrwfSxtY9UQ/exec";
+    <h1>CluesOnTues Admin</h1>
 
-document.getElementById("btn").onclick = () => {
-  fetch(URL, {
-    method: "POST"
-  })
-  .then(r => r.text())
-  .then(t => alert("Response: " + t))
-  .catch(err => alert("Error: " + err));
-};
-</script>
+    <label>Week Number:</label>
+    <input id="week" type="number" placeholder="e.g. 42">
+
+    <label>Theme:</label>
+    <input id="theme" type="text" placeholder="e.g. Famous Landmarks">
+
+    <h2>Questions</h2>
+
+    <div id="questions"></div>
+
+    <button onclick="uploadJSON()">Upload to Cloudflare</button>
+
+    <div id="status"></div>
+
+    <script>
+        // Build 10 question rows
+        const container = document.getElementById("questions");
+        for (let i = 1; i <= 10; i++) {
+            container.innerHTML += `
+                <div class="row">
+                    <strong>Question ${i}</strong>
+                    <input id="q${i}" placeholder="Question text">
+                    <input id="a${i}" placeholder="Answer">
+                </div>
+            `;
+        }
+
+        async function uploadJSON() {
+            const status = document.getElementById("status");
+            status.textContent = "Uploading...";
+
+            const week = document.getElementById("week").value.trim();
+            const theme = document.getElementById("theme").value.trim();
+
+            if (!week || !theme) {
+                status.textContent = "❌ Week and theme are required.";
+                return;
+            }
+
+            // Build JSON object
+            const clues = [];
+            for (let i = 1; i <= 10; i++) {
+                const q = document.getElementById(`q${i}`).value.trim();
+                const a = document.getElementById(`a${i}`).value.trim();
+
+                if (!q || !a) {
+                    status.textContent = `❌ Question ${i} is missing text or answer.`;
+                    return;
+                }
+
+                clues.push({ question: q, answer: a });
+            }
+
+            const jsonData = {
+                week: Number(week),
+                theme: theme,
+                clues: clues
+            };
+
+            try {
+                const response = await fetch(
+                    "https://tight-scene-ed56.cluesontues.workers.dev/",
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(jsonData)
+                    }
+                );
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    status.textContent = "✅ Upload successful!";
+                } else {
+                    status.textContent = "❌ Upload failed: " + (result.message || "Unknown error");
+                }
+
+            } catch (err) {
+                status.textContent = "❌ Error: " + err.message;
+            }
+        }
+    </script>
 
 </body>
 </html>
