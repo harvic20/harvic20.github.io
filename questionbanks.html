@@ -90,14 +90,6 @@
   </section>
 
   <section class="card">
-    <h2>Google Drive Tokens</h2>
-    <div class="row">
-      <input id="clientIdInput" type="text" placeholder="Google OAuth Client ID">
-      <input id="tokenInput" type="text" placeholder="Google OAuth Access Token">
-    </div>
-  </section>
-
-  <section class="card">
     <h2>10 Questions</h2>
     <div id="questionsContainer"></div>
   </section>
@@ -107,7 +99,7 @@
     <textarea id="jsonOutput" readonly></textarea>
     <button class="btn btn-primary" id="generateJsonBtn">Generate JSON</button>
     <button class="btn btn-secondary" id="downloadJsonBtn">Download JSON</button>
-    <button class="btn btn-primary" id="uploadJsonBtn">Upload JSON to Drive</button>
+    <button class="btn btn-primary" id="uploadJsonBtn">Upload JSON to Cloudflare</button>
   </section>
 
   <section class="card">
@@ -168,11 +160,14 @@
     const theme = document.getElementById("themeInput").value.trim();
     const questions = getQuestions();
 
-    const json = {
-      week: Number(week),
-      theme: theme,
-      questions: questions
-    };
+    // ⭐ Correct JSON format (array-based)
+    const json = [
+      { week: Number(week), theme: theme },
+      ...questions.map(q => ({
+        question: q.clue,
+        answer: q.answers[0] || ""
+      }))
+    ];
 
     document.getElementById("jsonOutput").value =
       JSON.stringify(json, null, 2);
@@ -205,39 +200,33 @@
   }
 
   async function uploadJSON() {
-    const clientId = document.getElementById("clientIdInput").value.trim();
-    const token = document.getElementById("tokenInput").value.trim();
     const jsonText = document.getElementById("jsonOutput").value;
 
-    if (!clientId || !token) {
-      alert("Please paste your Client ID and Access Token.");
+    if (!jsonText) {
+      alert("Generate JSON first.");
       return;
     }
 
-    const metadata = {
-      name: `cluesontues_week${document.getElementById("weekInput").value}.json`,
-      mimeType: "application/json"
-    };
+    try {
+      const response = await fetch(
+        "https://tight-scene-ed56.cluesontues.workers.dev/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: jsonText
+        }
+      );
 
-    const form = new FormData();
-    form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
-    form.append("file", new Blob([jsonText], { type: "application/json" }));
+      const result = await response.json();
 
-    const res = await fetch(
-      "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: form
+      if (response.ok) {
+        alert("Uploaded successfully!");
+      } else {
+        alert("Upload failed: " + (result.message || "Unknown error"));
       }
-    );
 
-    if (res.ok) {
-      alert("Uploaded successfully!");
-    } else {
-      alert("Upload failed. Check your token.");
+    } catch (err) {
+      alert("Error: " + err.message);
     }
   }
 
