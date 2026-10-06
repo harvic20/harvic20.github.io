@@ -1,67 +1,67 @@
 {
-  "week": 1,
-  "theme": "Test",
+  "week": 7,
+  "theme": "Countries at least one person on this group chat has been to",
   "questions": [
     {
-      "clue": "test test",
+      "clue": "Fromage Altitude",
       "answers": [
-        "test",
-        "2",
-        "1"
+        "France"
       ]
     },
     {
-      "clue": "test test",
+      "clue": "Feta Tzatziki",
       "answers": [
-        "test"
+        "Greece"
       ]
     },
     {
-      "clue": "test test",
+      "clue": "Sword Blossom",
       "answers": [
-        "test"
+        "Japan"
       ]
     },
     {
-      "clue": "test test",
+      "clue": "NATO Wall",
       "answers": [
-        "test"
+        "Germany"
       ]
     },
     {
-      "clue": "test test",
+      "clue": "Cold Supermarket",
       "answers": [
-        "test"
+        "Iceland"
       ]
     },
     {
-      "clue": "test test",
+      "clue": "Top Cardgame",
       "answers": [
-        "test"
+        "USA",
+        "United States of America",
+        "America"
       ]
     },
     {
-      "clue": "test test",
+      "clue": "No Gum",
       "answers": [
-        "test"
+        "Singapore"
       ]
     },
     {
-      "clue": "test test",
+      "clue": "Roll Collides",
       "answers": [
-        "test"
+        "Switzerland"
       ]
     },
     {
-      "clue": "test test",
+      "clue": "Fake Teeth",
       "answers": [
-        "test"
+        "Turkey"
       ]
     },
     {
-      "clue": "test test",
+      "clue": "Vlad Count",
       "answers": [
-        "test"
+        "Romania"
       ]
     }
   ]
