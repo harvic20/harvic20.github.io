@@ -1,67 +1,74 @@
 {
-  "week": 7,
-  "theme": "Countries at least one person on this group chat has been to",
+  "week": 8,
+  "theme": "Things Someone Might Cut",
   "questions": [
     {
-      "clue": "Fromage Altitude",
+      "clue": "Scissors Rock",
       "answers": [
-        "France"
+        "Paper"
       ]
     },
     {
-      "clue": "Feta Tzatziki",
+      "clue": "Crying Layers",
       "answers": [
-        "Greece"
+        "Onion",
+        "onions"
       ]
     },
     {
-      "clue": "Sword Blossom",
+      "clue": "Monopoly Cards",
       "answers": [
-        "Japan"
+        "Deal",
+        "a deal",
+        "Monopoly Deal"
       ]
     },
     {
-      "clue": "NATO Wall",
+      "clue": "90 Degrees",
       "answers": [
-        "Germany"
+        "Corner"
       ]
     },
     {
-      "clue": "Cold Supermarket",
+      "clue": "Guillotine French",
       "answers": [
-        "Iceland"
+        "Heads",
+        "head",
+        "royals",
+        "monarch",
+        "monarchs"
       ]
     },
     {
-      "clue": "Top Cardgame",
+      "clue": "Mass Gravity",
       "answers": [
-        "USA",
-        "United States of America",
-        "America"
+        "Weight"
       ]
     },
     {
-      "clue": "No Gum",
+      "clue": "Diamonds 13",
       "answers": [
-        "Singapore"
+        "Cards"
       ]
     },
     {
-      "clue": "Roll Collides",
+      "clue": "People Line",
       "answers": [
-        "Switzerland"
+        "Queue"
       ]
     },
     {
-      "clue": "Fake Teeth",
+      "clue": "Edinburgh Festival",
       "answers": [
-        "Turkey"
+        "Fringe",
+        "Hair"
       ]
     },
     {
-      "clue": "Vlad Count",
+      "clue": "Expenditures Down",
       "answers": [
-        "Romania"
+        "Cost",
+        "Costs"
       ]
     }
   ]
