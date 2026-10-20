@@ -1,74 +1,70 @@
 {
-  "week": 8,
-  "theme": "Things Someone Might Cut",
+  "week": 9,
+  "theme": "Things that contain eggs",
   "questions": [
     {
-      "clue": "Scissors Rock",
+      "clue": "Italian Noodle",
       "answers": [
-        "Paper"
+        "Pasta",
+        "Spaghetti"
       ]
     },
     {
-      "clue": "Crying Layers",
+      "clue": "Queen Scrub-Daddy",
       "answers": [
-        "Onion",
-        "onions"
+        "Victoria Sponge"
       ]
     },
     {
-      "clue": "Monopoly Cards",
+      "clue": "Infantry Dip",
       "answers": [
-        "Deal",
-        "a deal"
+        "Eggs and soldiers",
+        "Eggs and soldier"
       ]
     },
     {
-      "clue": "90 Degrees",
+      "clue": "Swiss Italian",
       "answers": [
-        "Corner",
-        "Corners"
+        "meringue"
       ]
     },
     {
-      "clue": "Guillotine French",
+      "clue": "Yellow Disc",
       "answers": [
-        "Heads",
-        "head",
-        "royals",
-        "monarch",
-        "monarchs"
+        "Omelette"
       ]
     },
     {
-      "clue": "Mass Gravity",
+      "clue": "Ben’s Brunch",
       "answers": [
-        "Weight"
+        "Eggs Benedict",
+        "Egg’s Benedict"
       ]
     },
     {
-      "clue": "Diamonds 13",
+      "clue": "Competitive Cutlery",
       "answers": [
-        "Cards"
+        "Egg and spoon",
+        "egg and spoon race"
       ]
     },
     {
-      "clue": "People Line",
+      "clue": "Hen House",
       "answers": [
-        "Queue"
+        "Coop",
+        "coup"
       ]
     },
     {
-      "clue": "Edinburgh Festival",
+      "clue": "Northern Sausage-roll",
       "answers": [
-        "Fringe",
-        "Hair"
+        "Greggs"
       ]
     },
     {
-      "clue": "Expenditures Down",
+      "clue": "Christmas Drink",
       "answers": [
-        "Cost",
-        "Costs"
+        "Eggnog"
       ]
     }
   ]
