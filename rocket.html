@@ -319,6 +319,84 @@
 body.rocket-open{overflow:hidden}
 @media(max-width:600px){.rocket-modal-header{padding:7px 9px}.rocket-modal-header .rocket-back{padding:8px;font-size:11px}}
 
+
+/* === Retro space mission theme — quiz only; rocket iframe stays unchanged === */
+:root{color-scheme:dark;--space:#07122a;--space-card:#0c1e42;--space-line:#375b9a;--star-gold:#ffd985;--ice:#dcecff}
+body{
+  color:var(--ice);min-height:100vh;
+  background-color:#060e24;
+  background-image:
+    radial-gradient(2px 2px at 12% 11%,#e3efff 99%,transparent),
+    radial-gradient(2px 2px at 82% 29%,#d7e8ff 99%,transparent),
+    radial-gradient(2px 2px at 46% 65%,#9cbcf2 99%,transparent),
+    radial-gradient(1px 1px at 32% 43%,#fff 99%,transparent),
+    radial-gradient(1px 1px at 73% 80%,#fff 99%,transparent),
+    radial-gradient(1px 1px at 7% 73%,#accafa 99%,transparent),
+    radial-gradient(ellipse at 50% 5%,#263b76 0%,#101d44 38%,#060e24 85%);
+  background-size:290px 330px,390px 350px,450px 390px,170px 190px,210px 250px,270px 280px,100% 100%;
+  background-attachment:fixed;
+}
+.container{
+  max-width:740px;color:#eaf2ff;
+  background:linear-gradient(155deg,rgba(22,43,87,.97),rgba(8,20,49,.98));
+  border:2px solid #5679b8;border-radius:14px;
+  box-shadow:0 0 0 5px #091630,0 16px 70px #0009,inset 0 0 32px #385fab22;
+  padding:clamp(17px,4vw,32px);
+}
+.container > img{filter:drop-shadow(0 5px 14px #0007);border-radius:8px}
+#themeTitle{
+  color:#ffdf94!important;font-family:Consolas,'Courier New',monospace;
+  text-transform:uppercase;letter-spacing:1.2px;line-height:1.25;
+  text-shadow:3px 3px #473454;margin:14px 0 20px!important;
+}
+.mission-intro{
+  border:2px solid #6082bb;background:linear-gradient(130deg,#142d61,#0b1e43);
+  border-radius:10px;padding:17px 18px;margin:14px 0 25px;
+  box-shadow:inset 0 0 0 2px #193967,4px 5px 0 #071227;
+}
+.mission-intro h2{margin:0 0 8px;color:var(--star-gold);font:bold clamp(14px,3.3vw,19px) Consolas,'Courier New',monospace;letter-spacing:1.4px}
+.mission-intro p{margin:0;color:#e3edff;font-size:clamp(14px,2.7vw,16px);line-height:1.6}
+.mission-intro .mission-small{margin-top:7px;color:#9fc4ff;font-size:12px;letter-spacing:.3px}
+.question{
+  background:linear-gradient(110deg,rgba(32,60,112,.66),rgba(15,34,76,.70));
+  border:1px solid #41629d;border-left:4px solid #e9bd72;
+  border-radius:9px;padding:16px;margin:0 0 14px;
+  box-shadow:0 3px 12px #0003;
+}
+.question p{margin:0 0 12px;color:#f3f7ff;font-weight:600;line-height:1.55}
+input[type="text"]{
+  display:block;width:100%;box-sizing:border-box;
+  background:#07152e;color:#fff;
+  border:2px solid #527ab8;border-radius:7px;
+  padding:12px 13px;font-size:16px;
+}
+input[type="text"]:focus{border-color:#ffcf76;box-shadow:0 0 0 3px #ffd27630;transform:none}
+input[type="text"]:disabled{color:#152643}
+#quizForm button[type="submit"]{
+  background:linear-gradient(180deg,#ffd987,#f5a849);color:#172b52;
+  border:2px solid #fff0b8;box-shadow:4px 4px 0 #050f27;
+  font:bold 16px Consolas,'Courier New',monospace;text-transform:uppercase;letter-spacing:1px;
+}
+#quizForm button[type="submit"]:hover{background:linear-gradient(180deg,#ffedb5,#ffc25f)}
+/* Result window still uses its original familiar tile/VAR design, recoloured for space. */
+.overlay{z-index:9000;background:rgba(2,8,27,.82);padding:12px}
+.popup{background:linear-gradient(145deg,#182f61,#0c1a3d);color:#eaf3ff;border:2px solid #7ca1db;box-shadow:0 15px 60px #000b}
+.popup h2,.popup h3{color:#ffdb93}
+#rocketLevelDescription{color:#acd1ff!important}
+#correctAnswers{color:#e8f1ff}
+#correctAnswers p{color:#e8f1ff}
+.var-popup{background:#172f5b;border-color:#84a9ea;color:#eaf3ff}
+.var-square{background:#dce7ff;color:#152a54}
+.var-square:hover{background:#ffdf91}
+.close-btn{background:#325caa}
+.rocket-launch-btn{background:#ffd176!important;color:#142348!important;border-color:#fff2bb!important}
+@media(max-width:600px){
+  .container{width:calc(100% - 24px);margin:20px auto;padding:17px}
+  .question{padding:13px}
+  .mission-intro{padding:14px}
+  .popup{width:min(100%,380px)}
+}
+
   </style>
 </head>
 
@@ -331,6 +409,11 @@ body.rocket-open{overflow:hidden}
 
     <form id="quizForm">
       <h2 id="themeTitle" style="text-align:center; color:#0a4dbf; margin-bottom:20px;"></h2>
+      <section class="mission-intro" aria-label="How to play">
+        <h2>🚀 YOUR MISSION</h2>
+        <p>Use the <strong>two words</strong> in each clue to guess the correct answer related to the theme. Every correct answer helps fuel your rocket and takes you further into space!</p>
+        <p class="mission-small">10 clues • 10 possible destinations • How far will you fly?</p>
+      </section>
 
     <div id="questionsContainer"></div>
 
