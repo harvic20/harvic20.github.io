@@ -786,10 +786,12 @@ function shareResult() {
     else emojiGrid += "🟥";
   });
 
+  const heightReached = rocketNames[getRocketLevel()];
   const shareText =
-    `Try Beat Me I Got: ${scoreText}\n` +
+    `I got ${scoreText}\n` +
     `${emojiGrid}\n` +
-    `https://harvic20.github.io/cluesontues.html`;
+    `MISSION STATUS: ${heightReached}\n` +
+    `https://harvic20.github.io/rocket.html`;
 
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(shareText)
