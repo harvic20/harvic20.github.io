@@ -1,70 +1,78 @@
 {
-  "week": 9,
-  "theme": "Things that contain eggs",
+  "week": 10,
+  "theme": "10 (CELEBRATING 10 WEEKS OF CLUE ON TUES))",
   "questions": [
     {
-      "clue": "Italian Noodle",
+      "clue": "Kids TV",
       "answers": [
-        "Pasta",
-        "Spaghetti"
+        "Ben 10",
+        "Ben Ten"
       ]
     },
     {
-      "clue": "Queen Scrub-Daddy",
+      "clue": "Parkrun Twice",
       "answers": [
-        "Victoria Sponge"
+        "10k"
       ]
     },
     {
-      "clue": "Infantry Dip",
+      "clue": "Waterproof Peg",
       "answers": [
-        "Eggs and soldiers",
-        "Eggs and soldier"
+        "Tent",
+        "Tents"
       ]
     },
     {
-      "clue": "Swiss Italian",
+      "clue": "Holy Rules",
       "answers": [
-        "meringue"
+        "10 Commandments",
+        "Ten Commandments",
+        "The 10 Commandments",
+        "The Ten Commandments"
       ]
     },
     {
-      "clue": "Yellow Disc",
+      "clue": "V V (Answer in same format)",
       "answers": [
-        "Omelette"
+        "X"
       ]
     },
     {
-      "clue": "Ben’s Brunch",
+      "clue": "3652.425 Sunsets",
       "answers": [
-        "Eggs Benedict",
-        "Egg’s Benedict"
+        "Decade"
       ]
     },
     {
-      "clue": "Competitive Cutlery",
+      "clue": "Strike Shoes",
       "answers": [
-        "Egg and spoon",
-        "egg and spoon race"
+        "Tenpin bowling",
+        "tenpin"
       ]
     },
     {
-      "clue": "Hen House",
+      "clue": "Sports Shop",
       "answers": [
-        "Coop",
-        "coup"
+        "Decathlon"
       ]
     },
     {
-      "clue": "Northern Sausage-roll",
+      "clue": "Sirs Jumping",
       "answers": [
-        "Greggs"
+        "Ten Lords are Leaping",
+        "Ten Lords Leaping",
+        "10 Lords are Leaping",
+        "10 Lords Leaping",
+        "Lords are Leaping"
       ]
     },
     {
-      "clue": "Christmas Drink",
+      "clue": "Number Parliament",
       "answers": [
-        "Eggnog"
+        "10 Downing Street",
+        "N.O. 10 Downing Street",
+        "N.O 10 Downing Street",
+        "NO 10 Downing Street"
       ]
     }
   ]
