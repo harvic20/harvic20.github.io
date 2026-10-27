@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clues on Tues Quiz MKIV</title>
+  <title>ClueOnTueMKIV</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -384,55 +384,39 @@ input[type="text"]:disabled{color:#152643}
 /* Result window still uses its original familiar tile/VAR design, recoloured for space. */
 .overlay{z-index:9000;background:rgba(2,8,27,.82);padding:12px}
 .popup{background:linear-gradient(145deg,#182f61,#0c1a3d);color:#eaf3ff;border:2px solid #7ca1db;box-shadow:0 15px 60px #000b}
-.popup{position:relative;padding-top:92px;overflow:visible!important}
+/* The popup scrolls normally while the achievement sticker floats outside it. */
+.popup-shell{position:relative;width:90%;max-width:350px;flex-shrink:0}
+.popup{position:relative;width:100%;max-width:none;padding-top:105px;overflow-y:auto!important;max-height:80vh}
 .achievement-sticker{
-  position:absolute;top:-24px;right:-20px;width:132px;height:132px;pointer-events:none;
-  display:none;align-items:center;justify-content:center;z-index:6;
-  filter:drop-shadow(0 10px 16px rgba(0,0,0,.42));
+  position:absolute;top:-53px;right:-31px;width:174px;height:174px;
+  pointer-events:none;display:none;align-items:center;justify-content:center;
+  z-index:15;transform:rotate(9deg);
+  filter:drop-shadow(4px 10px 4px rgba(0,0,0,.3)) drop-shadow(9px 13px 9px rgba(0,0,0,.28));
 }
 .achievement-sticker.show{display:flex}
 .achievement-saturn{
-  position:relative;width:116px;height:116px;
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  padding:18px 16px 15px;
-  color:#fff7dc;
-  clip-path:polygon(50% 1%,61% 18%,81% 9%,78% 31%,98% 39%,81% 50%,91% 71%,69% 69%,64% 96%,50% 82%,36% 96%,31% 69%,9% 71%,19% 50%,2% 39%,22% 31%,19% 9%,39% 18%);
-  border:4px solid rgba(255,255,255,.98);
-  box-shadow:
-    0 0 0 3px rgba(255,255,255,.32),
-    0 10px 18px rgba(0,0,0,.26),
-    inset 0 2px 0 rgba(255,255,255,.60),
-    inset 0 -16px 22px rgba(0,0,0,.20);
-  overflow:hidden;
+  position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  color:#3f2b19;
+  --badge-light:#fff18f;--badge-main:#ffcd49;--badge-dark:#d68c19;--badge-rim:#f28220;
 }
-.achievement-saturn::before{
-  content:"";position:absolute;inset:0;
-  background:
-    radial-gradient(circle at 30% 22%, rgba(255,255,255,.82) 0 10%, rgba(255,255,255,0) 28%),
-    linear-gradient(145deg, rgba(255,255,255,.30), rgba(255,255,255,0) 42%, rgba(0,0,0,.14) 78%, rgba(255,255,255,.08) 100%);
-  mix-blend-mode:screen;
-  pointer-events:none;
-}
-.achievement-saturn::after{
-  content:"";position:absolute;inset:7px;
-  clip-path:inherit;
-  border:2px solid rgba(255,255,255,.45);
-  opacity:.8;
-  pointer-events:none;
-}
+.achievement-star-art{display:block;width:100%;height:100%;overflow:visible}
 .achievement-copy{
-  position:relative;z-index:1;font-family:'Press Start 2P','Pixelify Sans',monospace;
-  font-size:8px;line-height:1.28;letter-spacing:0;text-transform:uppercase;
-  max-width:74px;word-break:break-word;text-shadow:1px 1px 0 rgba(0,0,0,.44);
+  position:absolute;z-index:2;left:19%;top:38%;width:62%;height:39%;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;text-transform:uppercase;
+  font-family:'Pixelify Sans','Courier New',monospace;
+  font-size:10.5px;font-weight:900;line-height:1.03;letter-spacing:-.28px;
+  overflow-wrap:break-word;text-shadow:0 1px 1px rgba(255,255,255,.45);
 }
 .achievement-copy strong{
-  display:block;font-size:11px;line-height:1.15;margin-bottom:5px
+  display:block;font-family:'Press Start 2P','Pixelify Sans',monospace;
+  font-size:11px;line-height:1.15;margin-bottom:4px;
 }
 @media(max-width:600px){
-  .popup{padding-top:84px}
-  .achievement-sticker{width:112px;height:112px;top:-18px;right:-12px}
-  .achievement-saturn{width:98px;height:98px;padding:14px 12px 12px}
-  .achievement-copy{font-size:7px;max-width:62px}
+  .popup-shell{width:min(90%,380px)}
+  .popup{padding-top:91px}
+  .achievement-sticker{width:151px;height:151px;top:-40px;right:-13px}
+  .achievement-copy{font-size:9.2px}
   .achievement-copy strong{font-size:10px}
 }
 .popup h2,.popup h3{color:#ffdb93}
@@ -537,12 +521,45 @@ input[type="text"]{font-size:18px!important;letter-spacing:.4px}
 <div id="confettiContainer"></div>
   <!-- POPUP -->
   <div class="overlay" id="overlay">
-    <div class="popup">
+    <div class="popup-shell">
       <div id="achievementSticker" class="achievement-sticker" aria-hidden="true">
         <div id="achievementSaturn" class="achievement-saturn">
+          <svg class="achievement-star-art" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="starBaseGradient" x1="0" y1="0" x2=".32" y2="1">
+                <stop offset="0" style="stop-color:var(--badge-light)"/>
+                <stop offset=".5" style="stop-color:var(--badge-main)"/>
+                <stop offset="1" style="stop-color:var(--badge-dark)"/>
+              </linearGradient>
+              <linearGradient id="starGlossGradient" x1="0" y1="0" x2=".8" y2="1">
+                <stop offset="0" stop-color="#fff" stop-opacity=".77"/>
+                <stop offset=".34" stop-color="#fff" stop-opacity=".20"/>
+                <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+              </linearGradient>
+              <clipPath id="starInnerClip">
+                <path d="M350 50 C376 50 391 83 407 115 L458 214 L595 237 C632 242 653 253 652 286 C653 311 628 335 606 355 L509 439 L541 559 C551 600 527 629 489 620 C475 617 454 606 434 594 L350 545 L266 594 C246 606 224 619 211 620 C172 631 148 601 159 560 L191 439 L94 355 C72 335 47 311 48 286 C48 252 69 242 106 237 L242 214 L293 115 C309 83 324 50 350 50 Z" transform="translate(350 350) scale(.87) translate(-350 -350)"/>
+              </clipPath>
+            </defs>
+            <!-- Paper-white sticker border and orange raised rim. -->
+            <path d="M350 50 C376 50 391 83 407 115 L458 214 L595 237 C632 242 653 253 652 286 C653 311 628 335 606 355 L509 439 L541 559 C551 600 527 629 489 620 C475 617 454 606 434 594 L350 545 L266 594 C246 606 224 619 211 620 C172 631 148 601 159 560 L191 439 L94 355 C72 335 47 311 48 286 C48 252 69 242 106 237 L242 214 L293 115 C309 83 324 50 350 50 Z"
+                  fill="var(--badge-rim)" stroke="#fff" stroke-width="31" stroke-linejoin="round"/>
+            <!-- Inset rounded metallic star, leaving a visible orange bevel. -->
+            <path d="M350 50 C376 50 391 83 407 115 L458 214 L595 237 C632 242 653 253 652 286 C653 311 628 335 606 355 L509 439 L541 559 C551 600 527 629 489 620 C475 617 454 606 434 594 L350 545 L266 594 C246 606 224 619 211 620 C172 631 148 601 159 560 L191 439 L94 355 C72 335 47 311 48 286 C48 252 69 242 106 237 L242 214 L293 115 C309 83 324 50 350 50 Z"
+                  transform="translate(350 350) scale(.87) translate(-350 -350)"
+                  fill="url(#starBaseGradient)" stroke="var(--badge-light)" stroke-width="8"/>
+            <g clip-path="url(#starInnerClip)">
+              <!-- A sweeping glossy reflection across the upper shoulders. -->
+              <path d="M45 155 Q210 228 354 255 Q500 283 659 182 L659 345 Q490 435 344 430 Q175 425 45 346 Z"
+                    fill="url(#starGlossGradient)" opacity=".77"/>
+              <ellipse cx="325" cy="169" rx="39" ry="99" transform="rotate(32 325 169)" fill="#fffdf0" opacity=".42"/>
+              <ellipse cx="240" cy="280" rx="15" ry="24" transform="rotate(32 240 280)" fill="#fffdf0" opacity=".52"/>
+              <path d="M70 455 Q350 515 630 442" fill="none" stroke="var(--badge-dark)" stroke-width="26" opacity=".14"/>
+            </g>
+          </svg>
           <div id="achievementCopy" class="achievement-copy"></div>
         </div>
       </div>
+      <div class="popup">
       <h2>Your Score</h2>
       <p id="scoreText"></p>
        <p id="rocketLevelDescription" style="font-size:0.9rem;color:#164d96"></p>
@@ -570,6 +587,7 @@ input[type="text"]{font-size:18px!important;letter-spacing:.4px}
 </p>
 
 
+      </div>
     </div>
   </div>
 
@@ -608,15 +626,21 @@ function updateAchievementSticker(){
   const copy = document.getElementById('achievementCopy');
   if(!sticker || !saturn || !copy) return;
   sticker.classList.add('show');
-  saturn.style.background =
-    'radial-gradient(circle at 30% 22%, rgba(255,255,255,.58) 0 11%, rgba(255,255,255,0) 29%), ' +
-    'linear-gradient(155deg, rgba(255,255,255,.30) 0%, ' + data.ring + ' 18%, ' + data.planet + ' 44%, #22345d 130%)';
-  saturn.style.color = level >= 9 ? '#1d1c18' : '#fffdf3';
-  copy.innerHTML = '<strong>' + level + '/10</strong>' + data.text;
-  saturn.style.borderColor = 'rgba(255,255,255,.98)';
-  saturn.style.boxShadow =
-    '0 0 0 3px rgba(255,255,255,.32), 0 10px 18px rgba(0,0,0,.26), inset 0 2px 0 rgba(255,255,255,.60), inset 0 -16px 22px rgba(0,0,0,.20)';
-  saturn.style.filter = 'none';
+  // Metallic enamel + coloured bevel, matching the rounded star sticker reference.
+  saturn.style.setProperty('--badge-light', data.ring);
+  saturn.style.setProperty('--badge-main', data.planet);
+  saturn.style.setProperty('--badge-dark', {
+    10:'#bd7518', 9:'#657589', 8:'#7e472a', 7:'#48318a', 6:'#147a40',
+    5:'#b78f20', 4:'#a8531d', 3:'#932626', 2:'#8b2222', 1:'#7d1a22', 0:'#651018'
+  }[level]);
+  saturn.style.setProperty('--badge-rim', level===10?'#f18522':level===9?'#8b96a6':
+    level===8?'#9c572d':level===7?'#5837ab':level===6?'#258949':
+    level===5?'#da9d19':level===4?'#ca671b':'#a72c2e');
+  saturn.style.color = (level===10 || level===9 || level===5) ? '#3e2c20' : '#fff9ec';
+  copy.textContent='';
+  const number=document.createElement('strong');
+  number.textContent=level+'/10';
+  copy.append(number, document.createTextNode(data.text));
 }
 function updateRocketResult(){
  const level=getRocketLevel();
@@ -695,7 +719,7 @@ fetch("questions.json")
   .then(data => {
 
     document.getElementById("themeTitle").innerText =
-      `CluesOnTues #${data.week} — ${data.theme}`;
+      `ClueOnTueMKIV #${data.week} — ${data.theme}`;
 
     const questions = data.questions;
     // Build questions
