@@ -1,80 +1,74 @@
 {
-  "week": 10,
-  "theme": "10 (CELEBRATING 10 WEEKS OF CLUE ON TUES)",
+  "week": 11,
+  "theme": "Bonfire Night",
   "questions": [
     {
-      "clue": "Kids TV",
+      "clue": "Luminous Branch",
       "answers": [
-        "Ben 10",
-        "Ben Ten"
+        "Glow stick",
+        "glow-stick",
+        "glowstick"
       ]
     },
     {
-      "clue": "Parkrun Twice",
+      "clue": "Girl Spoons",
       "answers": [
-        "10k"
+        "Guy Fawkes"
       ]
     },
     {
-      "clue": "Waterproof Peg",
+      "clue": "Rifle Bang",
       "answers": [
-        "Tent",
-        "Tents"
+        "Gunpowder",
+        "Gun powder"
       ]
     },
     {
-      "clue": "Holy Rules",
+      "clue": "And Shine",
       "answers": [
-        "10 Commandments",
-        "Ten Commandments",
-        "The 10 Commandments",
-        "The Ten Commandments"
+        "Sparkler"
       ]
     },
     {
-      "clue": "V V (Answer in same format)",
+      "clue": "Sugar Samsung",
       "answers": [
-        "X"
+        "Toffee Apple",
+        "Toffee-Apple"
       ]
     },
     {
-      "clue": "3652.425 Sunsets",
+      "clue": "Acaster Dull",
       "answers": [
-        "Decade"
+        "Bonfire Heart",
+        "James Blunt"
       ]
     },
     {
-      "clue": "Strike Shoes",
+      "clue": "Not Ketchup",
       "answers": [
-        "Tenpin bowling",
-        "tenpin"
+        "Houses of Parliament",
+        "HP sauce",
+        "Houses of Parliament sauce"
       ]
     },
     {
-      "clue": "Sports Shop",
+      "clue": "URL HTML",
       "answers": [
-        "Decathlon"
+        "Rocket"
       ]
     },
     {
-      "clue": "Sirs Jumping",
+      "clue": "Eight’s 1/5/6",
       "answers": [
-        "Ten Lords are Leaping",
-        "Ten Lords Leaping",
-        "10 Lords are Leaping",
-        "10 Lords Leaping",
-        "Lords are Leaping",
-        "Lords Leaping"
+        "Catherine Wheel"
       ]
     },
     {
-      "clue": "Number Parliament",
+      "clue": "Teenage Roar",
       "answers": [
-        "10 Downing Street",
-        "N.O. 10 Downing Street",
-        "N.O 10 Downing Street",
-        "NO 10 Downing Street",
-        "Downing Street"
+        "Firework",
+        "Fireworks",
+        "Katy Perry"
       ]
     }
   ]
