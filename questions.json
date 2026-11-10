@@ -1,74 +1,76 @@
 {
-  "week": 11,
-  "theme": "Bonfire Night",
+  "week": 0,
+  "theme": "",
   "questions": [
     {
-      "clue": "Luminous Branch",
+      "clue": "Craig Zara",
       "answers": [
-        "Glow stick",
-        "glow-stick",
-        "glowstick"
+        "Engagement",
+        "Diamond"
       ]
     },
     {
-      "clue": "Girl Spoons",
+      "clue": "Jess Easton",
       "answers": [
-        "Guy Fawkes"
+        "Wedding"
       ]
     },
     {
-      "clue": "Rifle Bang",
+      "clue": "Door Unlock",
       "answers": [
-        "Gunpowder",
-        "Gun powder"
+        "Keyring"
       ]
     },
     {
-      "clue": "And Shine",
+      "clue": "Surprise Trip",
       "answers": [
-        "Sparkler"
+        "Lord of the Rings the unexpected journey",
+        "lord of the rings",
+        "the unexpected journey"
       ]
     },
     {
-      "clue": "Sugar Samsung",
+      "clue": "5th 12",
       "answers": [
-        "Toffee Apple",
-        "Toffee-Apple"
+        "Golden Rings",
+        "5 Golden Rings",
+        "Five Golden Rings",
+        "Gold",
+        "Golden"
       ]
     },
     {
-      "clue": "Acaster Dull",
+      "clue": "Neptune Jupiter",
       "answers": [
-        "Bonfire Heart",
-        "James Blunt"
+        "Saturn"
       ]
     },
     {
-      "clue": "Not Ketchup",
+      "clue": "Game Angelical",
       "answers": [
-        "Houses of Parliament",
-        "HP sauce",
-        "Houses of Parliament sauce"
+        "Halo"
       ]
     },
     {
-      "clue": "URL HTML",
+      "clue": "Sponge Dry",
       "answers": [
-        "Rocket"
+        "Wring"
       ]
     },
     {
-      "clue": "Eight’s 1/5/6",
+      "clue": "Have Weasley",
       "answers": [
-        "Catherine Wheel"
+        "CERN",
+        "Hadron collider",
+        "Large Hadron Collider"
       ]
     },
     {
-      "clue": "Teenage Roar",
+      "clue": "Repeat It",
       "answers": [
-        "Firework",
-        "Fireworks",
-        "Katy Perry"
+        "Telephone",
+        "Phone",
+        "Call"
       ]
     }
   ]
